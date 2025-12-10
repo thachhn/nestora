@@ -1,0 +1,25 @@
+rules_version='2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Deny all client-side access
+    // All database operations are handled by Cloud Functions using Admin SDK
+    // Admin SDK bypasses these rules, so Functions can still access the data
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Optional: If you need client-side access in the future, you can add specific rules:
+    //
+    // Example: Allow users to read their own data
+    // match /users/{email} {
+    //   allow read: if request.auth != null && request.auth.token.email == email;
+    //   allow write: if false; // Only Functions can write
+    // }
+    //
+    // Example: Deny all access to OTPs (only Functions should access)
+    // match /otps/{document=**} {
+    //   allow read, write: if false;
+    // }
+  }
+}
