@@ -1,14 +1,14 @@
 /**
  * Request download handler
- * Validates email and code, sends OTP to email
+ * Validates email and product access, sends OTP to email
  */
 
 import { onRequest } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
-import { validateRequest, isValidEmail, isValidCode } from "../utils/validator";
+import { validateRequest, isValidEmail } from "../utils/validator";
 import { generateOTP, storeOTP, resetOTPAttempts } from "../models/OTP";
 import { sendOTPEmail } from "../services/mailer";
-import { verifyUserCodeAndProduct } from "../models/User";
+import { verifyUserProduct } from "../models/User";
 import { PruductId } from "../utils/constants";
 import { initHandler, handleError } from "../utils/handler";
 import { checkRateLimit, getIPAddress } from "../utils/rateLimiter";
@@ -31,11 +31,7 @@ export const requestDownload = onRequest(
 
     try {
       // Validate request body
-      const validation = validateRequest(req.body, [
-        "email",
-        "code",
-        "productId",
-      ]);
+      const validation = validateRequest(req.body, ["email", "productId"]);
       if (!validation.valid) {
         res.status(400).json({
           error: "Missing required fields",
@@ -44,17 +40,11 @@ export const requestDownload = onRequest(
         return;
       }
 
-      const { email, code, productId } = req.body;
+      const { email, productId } = req.body;
 
       // Validate email format
       if (!isValidEmail(email)) {
         res.status(400).json({ error: "Invalid email format" });
-        return;
-      }
-
-      // Validate code
-      if (!isValidCode(code)) {
-        res.status(400).json({ error: "Invalid code" });
         return;
       }
 
@@ -101,17 +91,13 @@ export const requestDownload = onRequest(
         return;
       }
 
-      // Verify user email, code and productId
-      const isValid = await verifyUserCodeAndProduct(
-        emailLower,
-        code,
-        productId
-      );
+      // Verify user email has access to productId
+      const hasAccess = await verifyUserProduct(emailLower, productId);
 
-      if (!isValid) {
-        res.status(401).json({
+      if (!hasAccess) {
+        res.status(403).json({
           error:
-            "Invalid email, code, or you don't have access to this product",
+            "Email not found or you don't have access to this product",
         });
         return;
       }

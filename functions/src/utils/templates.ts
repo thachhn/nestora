@@ -11,12 +11,9 @@ export interface EmailTemplate {
 }
 
 /**
- * Get email template by productId
+ * Get email template by productId (without code)
  */
-export function getTemplateByProductId(
-  productId: PruductId,
-  code: string
-): EmailTemplate {
+export function getTemplateByProductId(productId: PruductId): EmailTemplate {
   const templates: Record<PruductId, EmailTemplate> = {
     [PruductId.TRUY_TIM_NGOI_VUA]: {
       subject: "Chào mừng bạn đến với Truy Tìm Ngôi Vua",
@@ -31,11 +28,7 @@ export function getTemplateByProductId(
             <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
               <h2 style="color: #4CAF50;">Chào mừng bạn đến với Truy Tìm Ngôi Vua!</h2>
               <p>Bạn đã được thêm vào hệ thống thành công.</p>
-              <p>Mã truy cập của bạn là:</p>
-              <div style="background-color: #f4f4f4; padding: 20px; text-align: center; margin: 20px 0; border-radius: 5px;">
-                <h1 style="color: #4CAF50; margin: 0; font-size: 32px; letter-spacing: 5px;">${code}</h1>
-              </div>
-              <p>Vui lòng lưu mã này để sử dụng khi cần tải file.</p>
+              <p>Khi bạn muốn tải file, vui lòng sử dụng email này để yêu cầu mã OTP. Mã OTP sẽ được gửi đến email của bạn.</p>
               <p style="color: #666; font-size: 12px; margin-top: 30px;">
                 Đây là email tự động, vui lòng không trả lời email này.
               </p>
@@ -43,17 +36,17 @@ export function getTemplateByProductId(
           </body>
         </html>
       `,
-      text: `Chào mừng bạn đến với Truy Tìm Ngôi Vua! Bạn đã được thêm vào hệ thống thành công. Mã truy cập của bạn là: ${code}. Vui lòng lưu mã này để sử dụng khi cần tải file.`,
+      text: `Chào mừng bạn đến với Truy Tìm Ngôi Vua! Bạn đã được thêm vào hệ thống thành công. Khi bạn muốn tải file, vui lòng sử dụng email này để yêu cầu mã OTP. Mã OTP sẽ được gửi đến email của bạn.`,
     },
   };
 
-  return templates[productId] || getDefaultTemplate(code);
+  return templates[productId] || getDefaultTemplate();
 }
 
 /**
  * Get default template (fallback)
  */
-function getDefaultTemplate(code: string): EmailTemplate {
+function getDefaultTemplate(): EmailTemplate {
   return {
     subject: "Chào mừng bạn đến với hệ thống",
     html: `
@@ -67,15 +60,11 @@ function getDefaultTemplate(code: string): EmailTemplate {
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
             <h2 style="color: #4CAF50;">Chào mừng bạn!</h2>
             <p>Bạn đã được thêm vào hệ thống thành công.</p>
-            <p>Mã truy cập của bạn là:</p>
-            <div style="background-color: #f4f4f4; padding: 20px; text-align: center; margin: 20px 0; border-radius: 5px;">
-              <h1 style="color: #4CAF50; margin: 0; font-size: 32px; letter-spacing: 5px;">${code}</h1>
-            </div>
-            <p>Vui lòng lưu mã này để sử dụng khi cần tải file.</p>
+            <p>Khi bạn muốn tải file, vui lòng sử dụng email này để yêu cầu mã OTP. Mã OTP sẽ được gửi đến email của bạn.</p>
           </div>
         </body>
       </html>
     `,
-    text: `Chào mừng bạn! Bạn đã được thêm vào hệ thống thành công. Mã truy cập của bạn là: ${code}. Vui lòng lưu mã này để sử dụng khi cần tải file.`,
+    text: `Chào mừng bạn! Bạn đã được thêm vào hệ thống thành công. Khi bạn muốn tải file, vui lòng sử dụng email này để yêu cầu mã OTP. Mã OTP sẽ được gửi đến email của bạn.`,
   };
 }

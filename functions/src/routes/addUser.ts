@@ -1,6 +1,7 @@
 /**
  * Add user handler
- * Adds email and code to Firestore (protected by API key)
+ * Adds email and product access to Firestore (protected by API key)
+ * Note: Code is generated and stored but not sent via email
  */
 
 import { onRequest } from "firebase-functions/v2/https";
@@ -84,28 +85,19 @@ export const addUser = onRequest(
           // User exists: only add productId, keep existing code
           await addProductToUser(emailLower, productId as PruductId);
 
-          // Send welcome email with existing code
-          const template = getTemplateByProductId(
-            productId as PruductId,
-            existingUser.code
-          );
-          await sendWelcomeEmail(
-            emailLower,
-            existingUser.code,
-            productId,
-            template
-          );
+          // Send welcome email (notification only, no code)
+          const template = getTemplateByProductId(productId as PruductId);
+          await sendWelcomeEmail(emailLower, productId, template);
 
           results.push({
             email: emailLower,
             status: "updated",
             message: "Product added to existing user",
           });
-          logger.info(
-            `User ${emailLower} updated: product ${productId} added, code unchanged`
-          );
+          logger.info(`User ${emailLower} updated: product ${productId} added`);
         } else {
           // User doesn't exist: create new user with new code
+          // Note: Code is generated and stored but not sent via email
           const code = generateUserCode();
           await upsertUser({
             email: emailLower,
@@ -113,19 +105,17 @@ export const addUser = onRequest(
             products: [productId as PruductId],
           });
 
-          // Send welcome email with new code
-          const template = getTemplateByProductId(productId as PruductId, code);
-          await sendWelcomeEmail(emailLower, code, productId, template);
+          // Send welcome email (notification only, no code)
+          const template = getTemplateByProductId(productId as PruductId);
+          await sendWelcomeEmail(emailLower, productId, template);
 
           results.push({
             email: emailLower,
             code: code,
             status: "created",
-            message: "User created with new code",
+            message: "User created successfully",
           });
-          logger.info(
-            `User ${emailLower} created with code ${code} and product ${productId}`
-          );
+          logger.info(`User ${emailLower} created with product ${productId}`);
         }
       }
 

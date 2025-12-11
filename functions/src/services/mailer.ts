@@ -4,7 +4,7 @@
 
 import * as nodemailer from "nodemailer";
 import * as logger from "firebase-functions/logger";
-import {smtpConfig} from "../utils/config";
+import { smtpConfig } from "../utils/config";
 
 // Initialize nodemailer transporter
 const transporter = nodemailer.createTransport({
@@ -61,7 +61,6 @@ export async function sendOTPEmail(email: string, otp: string): Promise<void> {
  */
 export async function sendWelcomeEmail(
   email: string,
-  code: string,
   productId: string,
   template: { subject: string; html: string; text: string }
 ): Promise<void> {

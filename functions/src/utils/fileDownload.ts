@@ -72,8 +72,10 @@ export function getFileInfo(filePath: string): {
  */
 export function replaceHTMLContent(htmlContent: string, email: string): string {
   // Replace {{email}} or {email} with actual email
-  let replacedContent = htmlContent.replace(/\{\{email\}\}/g, email);
-  replacedContent = replacedContent.replace(/\{email\}/g, email);
+  const replacedContent = htmlContent.replace(
+    "e3t4eHh4ZW1haWx4eHh4fX0=",
+    btoa(email)
+  );
 
   return replacedContent;
 }
