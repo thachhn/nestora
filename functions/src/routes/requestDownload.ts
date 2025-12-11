@@ -11,6 +11,7 @@ import { sendOTPEmail } from "../services/mailer";
 import { verifyUserCodeAndProduct } from "../models/User";
 import { PruductId } from "../utils/constants";
 import { initHandler, handleError } from "../utils/handler";
+import { checkRateLimit, getIPAddress } from "../utils/rateLimiter";
 
 export const requestDownload = onRequest(
   {
@@ -63,8 +64,44 @@ export const requestDownload = onRequest(
         return;
       }
 
-      // Verify user email, code and productId
+      // Rate limiting: Check IP and email limits
+      const ipAddress = getIPAddress(req);
       const emailLower = email.toLowerCase();
+
+      // Rate limit by IP: max 10 requests per 15 minutes
+      const ipRateLimit = await checkRateLimit(ipAddress, {
+        maxRequests: 10,
+        windowMinutes: 15,
+        blockDurationMinutes: 30,
+      });
+
+      if (!ipRateLimit.allowed) {
+        res.status(429).json({
+          error:
+            ipRateLimit.message || "Too many requests. Please try again later.",
+        });
+        logger.warn(`Rate limit exceeded for IP: ${ipAddress}`);
+        return;
+      }
+
+      // Rate limit by email: max 5 requests per 15 minutes (prevent email spam)
+      const emailRateLimit = await checkRateLimit(`email_${emailLower}`, {
+        maxRequests: 5,
+        windowMinutes: 15,
+        blockDurationMinutes: 30,
+      });
+
+      if (!emailRateLimit.allowed) {
+        res.status(429).json({
+          error:
+            emailRateLimit.message ||
+            "Too many OTP requests for this email. Please try again later.",
+        });
+        logger.warn(`Rate limit exceeded for email: ${emailLower}`);
+        return;
+      }
+
+      // Verify user email, code and productId
       const isValid = await verifyUserCodeAndProduct(
         emailLower,
         code,

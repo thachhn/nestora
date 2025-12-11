@@ -19,7 +19,8 @@ import { initHandler, handleError } from "../utils/handler";
 export const addUser = onRequest(
   {
     region: "asia-southeast1", // Singapore - gần Việt Nam nhất
-    maxInstances: 10,
+    maxInstances: 3, // Limit concurrent instances (admin function)
+    minInstances: 0, // Scale to zero when not in use
   },
   async (req, res) => {
     if (
