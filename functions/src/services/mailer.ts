@@ -17,11 +17,15 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendOTPEmail(email: string, otp: string): Promise<void> {
+export async function sendOTPEmail(
+  email: string,
+  otp: string,
+  title: string
+): Promise<void> {
   const mailOptions = {
     from: smtpConfig.from || smtpConfig.user,
     to: email,
-    subject: "Your Download OTP",
+    subject: title,
     html: `
       <!DOCTYPE html>
       <html>
@@ -31,15 +35,11 @@ export async function sendOTPEmail(email: string, otp: string): Promise<void> {
         </head>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2 style="color: #4CAF50;">Download Verification Code</h2>
-            <p>Your OTP code for file download is:</p>
-            <div style="background-color: #f4f4f4; padding: 20px; text-align: center; margin: 20px 0; border-radius: 5px;">
-              <h1 style="color: #4CAF50; margin: 0; font-size: 32px; letter-spacing: 5px;">${otp}</h1>
+            <h2 style="color: #4CAF50;">Mã OTP của bạn là:</h2>
+            <div style="background-color: #f4f4f4; padding: 12px; text-align: center; margin: 12px 0; border-radius: 5px;">
+              <h1 style="color: #4CAF50; margin: 0; font-size: 24px; letter-spacing: 5px;">${otp}</h1>
             </div>
-            <p>This code will expire in 10 minutes.</p>
-            <p style="color: #666; font-size: 12px; margin-top: 30px;">
-              If you did not request this code, please ignore this email.
-            </p>
+            <p>Mã OTP sẽ hết hạn sau 10 phút.</p>
           </div>
         </body>
       </html>

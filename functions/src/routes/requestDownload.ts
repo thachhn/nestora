@@ -44,13 +44,13 @@ export const requestDownload = onRequest(
 
       // Validate email format
       if (!isValidEmail(email)) {
-        res.status(400).json({ error: "Invalid email format" });
+        res.status(400).json({ error: "Sai định dạng email" });
         return;
       }
 
       // Validate productId
       if (!productId || !Object.values(PruductId).includes(productId)) {
-        res.status(400).json({ error: "Invalid productId" });
+        res.status(400).json({ error: "Sai định dạng sản phẩm" });
         return;
       }
 
@@ -68,7 +68,7 @@ export const requestDownload = onRequest(
       if (!ipRateLimit.allowed) {
         res.status(429).json({
           error:
-            ipRateLimit.message || "Too many requests. Please try again later.",
+            ipRateLimit.message || "Quá nhiều yêu cầu. Vui lòng thử lại sau.",
         });
         logger.warn(`Rate limit exceeded for IP: ${ipAddress}`);
         return;
@@ -85,7 +85,7 @@ export const requestDownload = onRequest(
         res.status(429).json({
           error:
             emailRateLimit.message ||
-            "Too many OTP requests for this email. Please try again later.",
+            "Quá nhiều yêu cầu OTP cho email này. Vui lòng thử lại sau.",
         });
         logger.warn(`Rate limit exceeded for email: ${emailLower}`);
         return;
@@ -96,8 +96,7 @@ export const requestDownload = onRequest(
 
       if (!hasAccess) {
         res.status(403).json({
-          error:
-            "Email not found or you don't have access to this product",
+          error: "Email này chưa được đăng ký.",
         });
         return;
       }
@@ -109,14 +108,15 @@ export const requestDownload = onRequest(
       const otp = generateOTP();
       await storeOTP(emailLower, otp, productId);
 
+      const title = `Mã OTP để tải file là ${otp}`;
       // Send OTP email
-      await sendOTPEmail(email, otp);
+      await sendOTPEmail(email, otp, title);
 
       logger.info(`OTP sent to ${email} for product ${productId}`);
 
       res.status(200).json({
         success: true,
-        message: "OTP has been sent to your email",
+        message: "Mã OTP đã được gửi vào email của bạn",
       });
     } catch (error) {
       logger.error("Error in requestDownload:", error);

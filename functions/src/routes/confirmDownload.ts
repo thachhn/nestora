@@ -54,7 +54,7 @@ export const confirmDownload = onRequest(
       if (!isValidOTP(otp)) {
         res
           .status(400)
-          .json({ error: "Invalid OTP format. OTP must be 6 digits" });
+          .json({ error: "Sai định dạng mã OTP. Mã OTP phải là 6 chữ số" });
         return;
       }
 
@@ -78,7 +78,7 @@ export const confirmDownload = onRequest(
           ? 429
           : 401;
         res.status(statusCode).json({
-          error: otpValidation.message || "Invalid OTP",
+          error: otpValidation.message || "Sai mã OTP. Vui lòng thử lại.",
         });
         return;
       }

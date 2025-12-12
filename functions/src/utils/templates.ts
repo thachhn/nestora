@@ -11,45 +11,11 @@ export interface EmailTemplate {
 }
 
 /**
- * Get email template by productId (without code)
- */
-export function getTemplateByProductId(productId: PruductId): EmailTemplate {
-  const templates: Record<PruductId, EmailTemplate> = {
-    [PruductId.TRUY_TIM_NGOI_VUA]: {
-      subject: "Chào mừng bạn đến với Truy Tìm Ngôi Vua",
-      html: `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          </head>
-          <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-              <h2 style="color: #4CAF50;">Chào mừng bạn đến với Truy Tìm Ngôi Vua!</h2>
-              <p>Bạn đã được thêm vào hệ thống thành công.</p>
-              <p>Khi bạn muốn tải file, vui lòng sử dụng email này để yêu cầu mã OTP. Mã OTP sẽ được gửi đến email của bạn.</p>
-              <p style="color: #666; font-size: 12px; margin-top: 30px;">
-                Đây là email tự động, vui lòng không trả lời email này.
-              </p>
-            </div>
-          </body>
-        </html>
-      `,
-      text: `Chào mừng bạn đến với Truy Tìm Ngôi Vua! Bạn đã được thêm vào hệ thống thành công. Khi bạn muốn tải file, vui lòng sử dụng email này để yêu cầu mã OTP. Mã OTP sẽ được gửi đến email của bạn.`,
-    },
-  };
-
-  return templates[productId] || getDefaultTemplate();
-}
-
-/**
  * Get default template (fallback)
  */
-function getDefaultTemplate(): EmailTemplate {
-  return {
-    subject: "Chào mừng bạn đến với hệ thống",
-    html: `
+const defaultTemplate: EmailTemplate = {
+  subject: "Chào mừng bạn đến với hệ thống",
+  html: `
       <!DOCTYPE html>
       <html>
         <head>
@@ -58,13 +24,57 @@ function getDefaultTemplate(): EmailTemplate {
         </head>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2 style="color: #4CAF50;">Chào mừng bạn!</h2>
-            <p>Bạn đã được thêm vào hệ thống thành công.</p>
-            <p>Khi bạn muốn tải file, vui lòng sử dụng email này để yêu cầu mã OTP. Mã OTP sẽ được gửi đến email của bạn.</p>
+            <p>Email của thầy cô đã được thêm vào hệ thống. Thầy cô hãy tải file tại đây: <a href="https://nestora.edu.vn/" style="color: #4CAF50;">https://nestora.edu.vn/</a></p>
+
+            <p>Thầy cô có thể xem hướng dẫn tải file tại đây: <a href="https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view?usp=drive_link" style="color: #4CAF50;">https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view?usp=drive_link</a></p>
+
+            <p><strong>Lưu ý:</strong></p>
+            <ul style="line-height: 1.8;">
+              <li>Vì dữ liệu của ứng dụng được lưu vào trình duyệt web, nên nếu thầy cô xóa lịch sử trình duyệt hoặc cài lại máy tính có thể gây ra mất dữ liệu. Vì thế, thầy cô hãy thường xuyên xuất dữ liệu ra file EXCEL nhé!</li>
+
+              <li>Trước khi cập nhật phiên bản mới, thầy cô xuất dữ liệu ra file Excel để tránh bị lỗi dữ liệu.</li>
+
+              <li>Khi có tính năng mới, thầy cô chỉ cần tải lại file cài đặt ở link Drive. Thầy cô theo dõi Tiktok hoặc giữ liên lạc qua Zalo để cập nhật tính năng mới mình sẽ thông báo trên kênh nhé!</li>
+
+              <li>Vui lòng không chia sẻ file cho người khác mà không có sự đồng ý của Nestora. Nếu vi phạm, email sẽ bị XÓA khỏi hệ thống. Thầy cô sẽ không được cập nhật tính năng mới nữa.</li>
+
+              <li>Nếu có thắc mắc trong quá trình sử dụng, thầy cô liên hệ qua email: <a href="mailto:tinhocnestora@gmail.com" style="color: #4CAF50;">tinhocnestora@gmail.com</a> hoặc Zalo: <a href="tel:0559468839" style="color: #4CAF50;">0559 468 839</a>.</li>
+            </ul>
+
+            <p>Cảm ơn thầy cô. Chúc thầy cô có những tiết dạy thú vị.</p>
           </div>
         </body>
       </html>
     `,
-    text: `Chào mừng bạn! Bạn đã được thêm vào hệ thống thành công. Khi bạn muốn tải file, vui lòng sử dụng email này để yêu cầu mã OTP. Mã OTP sẽ được gửi đến email của bạn.`,
+  text: `Email của thầy cô đã được thêm vào hệ thống. Thầy cô hãy tải file tại đây: https://nestora.edu.vn/
+
+Thầy cô có thể xem hướng dẫn tải file tại đây: https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view?usp=drive_link
+
+Lưu ý:
+
+- Vì dữ liệu của ứng dụng được lưu vào trình duyệt web, nên nếu thầy cô xóa lịch sử trình duyệt hoặc cài lại máy tính có thể gây ra mất dữ liệu. Vì thế, thầy cô hãy thường xuyên xuất dữ liệu ra file EXCEL nhé!
+
+- Trước khi cập nhật phiên bản mới, thầy cô xuất dữ liệu ra file Excel để tránh bị lỗi dữ liệu.
+
+- Khi có tính năng mới, thầy cô chỉ cần tải lại file cài đặt ở link Drive. Thầy cô theo dõi Tiktok hoặc giữ liên lạc qua Zalo để cập nhật tính năng mới mình sẽ thông báo trên kênh nhé!
+
+- Vui lòng không chia sẻ file cho người khác mà không có sự đồng ý của Nestora. Nếu vi phạm, email sẽ bị XÓA khỏi hệ thống. Thầy cô sẽ không được cập nhật tính năng mới nữa.
+
+- Nếu có thắc mắc trong quá trình sử dụng, thầy cô liên hệ qua email: tinhocnestora@gmail.com hoặc Zalo: 0559 468 839.
+
+Cảm ơn thầy cô. Chúc thầy cô có những tiết dạy thú vị.`,
+};
+
+/**
+ * Get email template by productId (without code)
+ */
+export function getTemplateByProductId(productId: PruductId): EmailTemplate {
+  const templates: Record<PruductId, EmailTemplate> = {
+    [PruductId.TRUY_TIM_NGOI_VUA]: {
+      ...defaultTemplate,
+      subject: "Truy cập ứng dụng Truy Tìm Ngôi Vua",
+    },
   };
+
+  return templates[productId] || defaultTemplate;
 }

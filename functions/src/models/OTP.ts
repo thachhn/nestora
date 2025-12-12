@@ -244,7 +244,7 @@ export async function validateOTP(
   if (otpData.otp !== otp) {
     // Record failed attempt
     await recordOTPAttempt(email, productId, ipAddress);
-    return { valid: false, message: "Invalid OTP" };
+    return { valid: false, message: "Sai mã OTP. Vui lòng thử lại." };
   }
 
   // OTP is valid - reset attempts and mark as used
