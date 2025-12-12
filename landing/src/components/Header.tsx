@@ -2,6 +2,8 @@ import { Box, Typography, Link, Card } from "@mui/joy";
 
 import { Email, Facebook, YouTube } from "@mui/icons-material";
 import { TikTokIcon, ZaloIcon } from "../svgIcons";
+import { useEffect, useState } from "react";
+import AddUserModal from "./AddUserModal";
 
 interface SocialLink {
   name: string;
@@ -36,7 +38,31 @@ const socialLinks: SocialLink[] = [
   },
 ];
 
+const apiKey = localStorage.getItem("addUserApiKey");
+
 export default function Header() {
+  const [totalClick, setTotalClick] = useState(0);
+  const [openAddUserModal, setOpenAddUserModal] = useState(false);
+
+  const handleClickAddUser = () => {
+    if (apiKey) {
+      setOpenAddUserModal(true);
+      return;
+    }
+    setTotalClick((prev: number) => prev + 1);
+    const timer = setTimeout(() => {
+      setTotalClick(0);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  };
+
+  useEffect(() => {
+    if (totalClick >= 10) {
+      setOpenAddUserModal(true);
+    }
+  }, [totalClick]);
+
   return (
     <Card
       sx={{
@@ -90,9 +116,7 @@ export default function Header() {
               fontWeight: 700,
               ml: { xs: 0, md: 2 },
             }}
-            onClick={() => {
-              window.open("https://tinhocnestora.com", "_blank");
-            }}
+            onClick={handleClickAddUser}
           >
             Tin học Nestora
           </Typography>
@@ -186,6 +210,12 @@ export default function Header() {
           học của thầy cô thì hãy ủng hộ mình nhé.
         </Typography>
       </Box>
+      {!!openAddUserModal && (
+        <AddUserModal
+          open={openAddUserModal}
+          onClose={() => setOpenAddUserModal(false)}
+        />
+      )}
     </Card>
   );
 }

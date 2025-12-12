@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Typography, FormControl, Input, Button, Box, Divider } from "@mui/joy";
 import OTPInput from "./OTPInput";
+import { confirmDownload, requestDownload } from "../apis";
 
 interface EmailOTPStepProps {
   productId: string;
@@ -8,9 +9,6 @@ interface EmailOTPStepProps {
   onError: (error: string) => void;
   onSuccess: (message: string) => void;
 }
-
-const API_BASE_URL =
-  "https://asia-southeast1-nestora-register.cloudfunctions.net";
 
 export default function EmailOTPStep({
   productId,
@@ -43,16 +41,7 @@ export default function EmailOTPStep({
     setCountdown(0);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/requestDownload`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          productId,
-        }),
-      });
+      const response = await requestDownload(email, productId);
 
       const data = await response.json();
 
@@ -79,17 +68,7 @@ export default function EmailOTPStep({
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/confirmDownload`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          otp: otpString,
-          productId,
-        }),
-      });
+      const response = await confirmDownload(email, otpString, productId);
 
       if (!response.ok) {
         const data = await response.json();

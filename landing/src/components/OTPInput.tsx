@@ -44,7 +44,7 @@ const OTPInput = ({ onChange, disabled }: OTPInputProps) => {
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     const text = e.clipboardData.getData("text");
-    if (!new RegExp(`^[0-9]{${otp.length}}$`).test(text)) {
+    if (!new RegExp(`^[0-9]{${otpLength}}$`).test(text)) {
       return;
     }
     setOtp(text);
