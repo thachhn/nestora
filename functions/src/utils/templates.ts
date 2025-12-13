@@ -26,7 +26,7 @@ const defaultTemplate: EmailTemplate = {
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
             <p>Email của thầy cô đã được thêm vào hệ thống. Thầy cô hãy tải file tại đây: <a href="https://nestora.edu.vn/" style="color: #4CAF50;">https://nestora.edu.vn/</a></p>
 
-            <p>Thầy cô có thể xem hướng dẫn tải file tại đây: <a href="https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view?usp=drive_link" style="color: #4CAF50;">https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view?usp=drive_link</a></p>
+            <p>Thầy cô có thể xem hướng dẫn tải file tại đây: <a href="https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view" style="color: #4CAF50;">https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view</a></p>
 
             <p><strong>Lưu ý:</strong></p>
             <ul style="line-height: 1.8;">
@@ -48,7 +48,7 @@ const defaultTemplate: EmailTemplate = {
     `,
   text: `Email của thầy cô đã được thêm vào hệ thống. Thầy cô hãy tải file tại đây: https://nestora.edu.vn/
 
-Thầy cô có thể xem hướng dẫn tải file tại đây: https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view?usp=drive_link
+Thầy cô có thể xem hướng dẫn tải file tại đây: https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view
 
 Lưu ý:
 
