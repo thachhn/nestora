@@ -15,6 +15,9 @@ export const confirmDownload = onRequest(
   {
     region: "asia-southeast1", // Singapore - gần Việt Nam nhất
     maxInstances: 10,
+    memory: "512MiB", // Medium memory: reads 3.1MB HTML file into memory
+    cpu: 0.5,
+    timeoutSeconds: 60, // 1 minute: default timeout sufficient
   },
   async (req, res) => {
     // Initialize handler (CORS, method validation)

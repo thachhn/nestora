@@ -22,6 +22,9 @@ export const addUser = onRequest(
     region: "asia-southeast1", // Singapore - gần Việt Nam nhất
     maxInstances: 3, // Limit concurrent instances (admin function)
     minInstances: 0, // Scale to zero when not in use
+    memory: "256MiB", // Low memory: max 5 emails per request, mostly I/O (cost-optimized)
+    cpu: 0.5,
+    timeoutSeconds: 120, // 2 minutes: sufficient for max 5 emails (each ~2-3s)
   },
   async (req, res) => {
     if (
