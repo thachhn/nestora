@@ -17,7 +17,7 @@ export const requestDownload = onRequest(
   {
     region: "asia-southeast1", // Singapore - gần Việt Nam nhất
     maxInstances: 10,
-    memory: "128MiB", // Minimal memory: single request processing, mostly I/O (cost-optimized)
+    memory: "256MiB", // Minimal memory: single request processing, mostly I/O (cost-optimized)
     cpu: 0.5,
     timeoutSeconds: 60, // 1 minute: default timeout sufficient
   },
