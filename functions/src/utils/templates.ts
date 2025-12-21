@@ -24,7 +24,7 @@ const defaultTemplate: EmailTemplate = {
         </head>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-            <p>Email của thầy cô đã được thêm vào hệ thống. Thầy cô hãy tải file tại đây: <a href="https://nestora.edu.vn/" style="color: #4CAF50;">https://nestora.edu.vn/</a></p>
+            <p>Email của thầy cô đã được thêm vào hệ thống. Thầy cô hãy tải file tại đây: <a href="https://nestora.edu.vn/product/truy-tim-ngoi-vua" style="color: #4CAF50;">https://nestora.edu.vn/product/truy-tim-ngoi-vua</a></p>
 
             <p>Thầy cô có thể xem hướng dẫn tải file tại đây: <a href="https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view" style="color: #4CAF50;">https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view</a></p>
 
@@ -34,7 +34,7 @@ const defaultTemplate: EmailTemplate = {
 
               <li>Trước khi cập nhật phiên bản mới, thầy cô xuất dữ liệu ra file Excel để tránh bị lỗi dữ liệu.</li>
 
-              <li>Khi có tính năng mới, thầy cô chỉ cần tải lại file cài đặt ở link Drive. Thầy cô theo dõi Tiktok hoặc giữ liên lạc qua Zalo để cập nhật tính năng mới mình sẽ thông báo trên kênh nhé!</li>
+              <li>Khi có tính năng mới, thầy cô chỉ cần tải lại file cài đặt ở link trên. Thầy cô theo dõi Tiktok hoặc giữ liên lạc qua Zalo để cập nhật tính năng mới mình sẽ thông báo trên kênh nhé!</li>
 
               <li>Vui lòng không chia sẻ file cho người khác mà không có sự đồng ý của Nestora. Nếu vi phạm, email sẽ bị XÓA khỏi hệ thống. Thầy cô sẽ không được cập nhật tính năng mới nữa.</li>
 
@@ -56,7 +56,7 @@ Lưu ý:
 
 - Trước khi cập nhật phiên bản mới, thầy cô xuất dữ liệu ra file Excel để tránh bị lỗi dữ liệu.
 
-- Khi có tính năng mới, thầy cô chỉ cần tải lại file cài đặt ở link Drive. Thầy cô theo dõi Tiktok hoặc giữ liên lạc qua Zalo để cập nhật tính năng mới mình sẽ thông báo trên kênh nhé!
+- Khi có tính năng mới, thầy cô chỉ cần tải lại file cài đặt ở link trên. Thầy cô theo dõi Tiktok hoặc giữ liên lạc qua Zalo để cập nhật tính năng mới mình sẽ thông báo trên kênh nhé!
 
 - Vui lòng không chia sẻ file cho người khác mà không có sự đồng ý của Nestora. Nếu vi phạm, email sẽ bị XÓA khỏi hệ thống. Thầy cô sẽ không được cập nhật tính năng mới nữa.
 
