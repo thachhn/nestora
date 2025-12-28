@@ -9,6 +9,7 @@ export interface HandlerOptions {
   allowedMethods?: string[];
   allowedHeaders?: string[];
   requireApiKey?: boolean;
+  requireAuthenticationApiKey?: boolean;
 }
 
 /**
@@ -88,6 +89,7 @@ export function initHandler(
     allowedMethods = ["POST", "OPTIONS"],
     allowedHeaders = ["Content-Type"],
     requireApiKey = false,
+    requireAuthenticationApiKey = false,
   } = options;
 
   // Setup CORS
@@ -107,6 +109,12 @@ export function initHandler(
   // Validate API key if required
   if (requireApiKey) {
     if (!validateAPIKey(req, res, apiKey as string, "x-api-key")) {
+      return false;
+    }
+  }
+
+  if (requireAuthenticationApiKey) {
+    if (!validateAPIKey(req, res, `Apikey ${apiKey}`, "Authorization")) {
       return false;
     }
   }

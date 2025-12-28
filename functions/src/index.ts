@@ -22,9 +22,15 @@ admin.initializeApp();
 setGlobalOptions({
   region: "asia-southeast1",
   maxInstances: 10,
+  minInstances: 0,
+  memory: "256MiB",
+  cpu: 0.5,
+  timeoutSeconds: 120,
 });
 
 // Export handlers
 export { requestDownload } from "./routes/requestDownload";
 export { confirmDownload } from "./routes/confirmDownload";
 export { addUser } from "./routes/addUser";
+export { verifyPay } from "./routes/verifyPay";
+export { checkPayCode } from "./routes/checkPayCode";

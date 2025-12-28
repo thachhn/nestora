@@ -4,7 +4,7 @@
  */
 
 import * as admin from "firebase-admin";
-import { Timestamp } from "firebase-admin/firestore";
+import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { PruductId } from "../utils/constants";
 
 const USERS_COLLECTION = "users";
@@ -72,8 +72,13 @@ export async function updateUser(
   const db = admin.firestore();
   const emailLower = email.toLowerCase();
 
-  const updateData: any = {
-    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+  const updateData: {
+    updatedAt: FieldValue;
+    code?: string;
+    products?: PruductId[];
+    status?: "active" | "inactive";
+  } = {
+    updatedAt: Timestamp.now(),
   };
 
   if (userData.code !== undefined) {
@@ -117,7 +122,7 @@ export async function addProductToUser(
 
   await db.collection(USERS_COLLECTION).doc(emailLower).update({
     products: updatedProducts,
-    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    updatedAt: Timestamp.now(),
   });
 
   return (await getUserByEmail(emailLower)) as UserModel;

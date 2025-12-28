@@ -5,125 +5,162 @@
 
 import { onRequest } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
-import { validateRequest, isValidEmail } from "../utils/validator";
+import {
+  validateRequest,
+  isValidEmail,
+  generatePaymentCode,
+} from "../utils/validator";
 import { generateOTP, storeOTP, resetOTPAttempts } from "../models/OTP";
 import { sendOTPEmail } from "../services/mailer";
 import { verifyUserProduct } from "../models/User";
-import { PruductId } from "../utils/constants";
+import { createPayCode } from "../models/PayCode";
+import { PruductId, PRODUCT_MAP } from "../utils/constants";
 import { initHandler, handleError } from "../utils/handler";
 import { checkRateLimit, getIPAddress } from "../utils/rateLimiter";
 
-export const requestDownload = onRequest(
-  {
-    region: "asia-southeast1", // Singapore - gần Việt Nam nhất
-    maxInstances: 10,
-    memory: "256MiB", // Minimal memory: single request processing, mostly I/O (cost-optimized)
-    cpu: 0.5,
-    timeoutSeconds: 60, // 1 minute: default timeout sufficient
-  },
-  async (req, res) => {
-    // Initialize handler (CORS, method validation)
-    if (
-      !initHandler(req, res, {
-        allowedMethods: ["POST", "OPTIONS"],
-        allowedHeaders: ["Content-Type"],
-      })
-    ) {
+export const requestDownload = onRequest({}, async (req, res) => {
+  // Initialize handler (CORS, method validation)
+  if (
+    !initHandler(req, res, {
+      allowedMethods: ["POST", "OPTIONS"],
+      allowedHeaders: ["Content-Type"],
+    })
+  ) {
+    return;
+  }
+
+  try {
+    // Validate request body
+    const validation = validateRequest(req.body, ["email", "productId"]);
+    if (!validation.valid) {
+      res.status(400).json({
+        error: "Missing required fields",
+        missingFields: validation.missingFields,
+      });
       return;
     }
 
-    try {
-      // Validate request body
-      const validation = validateRequest(req.body, ["email", "productId"]);
-      if (!validation.valid) {
+    const { email, productId, isPayment } = req.body;
+
+    // Validate email format
+    if (!isValidEmail(email)) {
+      res.status(400).json({ error: "Sai định dạng email" });
+      return;
+    }
+
+    // Validate productId
+    if (!productId || !Object.values(PruductId).includes(productId)) {
+      res.status(400).json({ error: "Sai định dạng sản phẩm" });
+      return;
+    }
+
+    // Rate limiting: Check IP and email limits
+    const ipAddress = getIPAddress(req);
+    const emailLower = email.toLowerCase();
+
+    // Rate limit by IP: max 10 requests per 15 minutes
+    const ipRateLimit = await checkRateLimit(ipAddress, {
+      maxRequests: 10,
+      windowMinutes: 15,
+      blockDurationMinutes: 30,
+    });
+
+    if (!ipRateLimit.allowed) {
+      res.status(429).json({
+        error:
+          ipRateLimit.message || "Quá nhiều yêu cầu. Vui lòng thử lại sau.",
+      });
+      logger.warn(`Rate limit exceeded for IP: ${ipAddress}`);
+      return;
+    }
+
+    // Rate limit by email: max 5 requests per 15 minutes (prevent email spam)
+    const emailRateLimit = await checkRateLimit(`email_${emailLower}`, {
+      maxRequests: 5,
+      windowMinutes: 15,
+      blockDurationMinutes: 30,
+    });
+
+    if (!emailRateLimit.allowed) {
+      res.status(429).json({
+        error:
+          emailRateLimit.message ||
+          "Quá nhiều yêu cầu cho email này. Vui lòng thử lại sau.",
+      });
+      logger.warn(`Rate limit exceeded for email: ${emailLower}`);
+      return;
+    }
+
+    // Verify user email has access to productId
+    const hasAccess = await verifyUserProduct(emailLower, productId);
+
+    if (!hasAccess) {
+      // User doesn't have access - create payment code
+      // Get product price from PRODUCT_MAP
+      const productInfo = PRODUCT_MAP[productId as PruductId];
+      if (!productInfo || !productInfo.price) {
         res.status(400).json({
-          error: "Missing required fields",
-          missingFields: validation.missingFields,
+          error: "Không tìm thấy thông tin sản phẩm",
         });
         return;
       }
 
-      const { email, productId } = req.body;
+      const amount = productInfo.price;
+      const { metadata } = req.body;
 
-      // Validate email format
-      if (!isValidEmail(email)) {
-        res.status(400).json({ error: "Sai định dạng email" });
-        return;
-      }
+      // Generate payment code: NE + YYMMDDHHMMSS + 10 random characters
+      const paymentCode = generatePaymentCode();
+      const uuid = paymentCode.substring(2); // Extract UUID (22 characters: timestamp + random)
 
-      // Validate productId
-      if (!productId || !Object.values(PruductId).includes(productId)) {
-        res.status(400).json({ error: "Sai định dạng sản phẩm" });
-        return;
-      }
-
-      // Rate limiting: Check IP and email limits
-      const ipAddress = getIPAddress(req);
-      const emailLower = email.toLowerCase();
-
-      // Rate limit by IP: max 10 requests per 15 minutes
-      const ipRateLimit = await checkRateLimit(ipAddress, {
-        maxRequests: 10,
-        windowMinutes: 15,
-        blockDurationMinutes: 30,
+      // Create PayCode record
+      await createPayCode(uuid, {
+        email: emailLower,
+        productId: productId as PruductId,
+        amount: amount,
+        metadata: metadata || "",
       });
 
-      if (!ipRateLimit.allowed) {
-        res.status(429).json({
-          error:
-            ipRateLimit.message || "Quá nhiều yêu cầu. Vui lòng thử lại sau.",
-        });
-        logger.warn(`Rate limit exceeded for IP: ${ipAddress}`);
-        return;
-      }
+      logger.info(
+        `Payment code created: ${paymentCode} for email ${emailLower}, product ${productId}, amount ${amount}`
+      );
 
-      // Rate limit by email: max 5 requests per 15 minutes (prevent email spam)
-      const emailRateLimit = await checkRateLimit(`email_${emailLower}`, {
-        maxRequests: 5,
-        windowMinutes: 15,
-        blockDurationMinutes: 30,
-      });
-
-      if (!emailRateLimit.allowed) {
-        res.status(429).json({
-          error:
-            emailRateLimit.message ||
-            "Quá nhiều yêu cầu OTP cho email này. Vui lòng thử lại sau.",
-        });
-        logger.warn(`Rate limit exceeded for email: ${emailLower}`);
-        return;
-      }
-
-      // Verify user email has access to productId
-      const hasAccess = await verifyUserProduct(emailLower, productId);
-
-      if (!hasAccess) {
-        res.status(403).json({
-          error: "Email này chưa được đăng ký.",
-        });
-        return;
-      }
-
-      // Reset any previous failed attempts when generating new OTP
-      await resetOTPAttempts(emailLower, productId);
-
-      // Generate and store OTP
-      const otp = generateOTP();
-      await storeOTP(emailLower, otp, productId);
-
-      const title = `Mã OTP để tải file là ${otp}`;
-      // Send OTP email
-      await sendOTPEmail(email, otp, title);
-
-      logger.info(`OTP sent to ${email} for product ${productId}`);
-
+      // Return UUID to client
       res.status(200).json({
         success: true,
-        message: "Mã OTP đã được gửi vào email của bạn",
+        paymentCode,
+        amount,
+        message: "Mã thanh toán đã được tạo",
       });
-    } catch (error) {
-      logger.error("Error in requestDownload:", error);
-      handleError(error, res, "Internal server error");
+      return;
+    } else {
+      if (isPayment) {
+        res.status(400).json({
+          error:
+            "Email này đã được đăng ký mua hàng. Không cần thanh toán nữa.",
+        });
+        return;
+      }
     }
+
+    // Reset any previous failed attempts when generating new OTP
+    await resetOTPAttempts(emailLower, productId);
+
+    // Generate and store OTP
+    const otp = generateOTP();
+    await storeOTP(emailLower, otp, productId);
+
+    const title = `Mã OTP để tải file là ${otp}`;
+    // Send OTP email
+    await sendOTPEmail(email, otp, title);
+
+    logger.info(`OTP sent to ${email} for product ${productId}`);
+
+    res.status(200).json({
+      success: true,
+      message: "Mã OTP đã được gửi vào email của bạn",
+    });
+  } catch (error) {
+    logger.error("Error in requestDownload:", error);
+    handleError(error, res, "Internal server error");
   }
-);
+});

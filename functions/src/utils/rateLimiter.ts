@@ -4,7 +4,7 @@
  */
 
 import * as admin from "firebase-admin";
-import { Timestamp } from "firebase-admin/firestore";
+import { Timestamp, FieldValue } from "firebase-admin/firestore";
 
 const RATE_LIMIT_COLLECTION = "rate_limits";
 
@@ -113,7 +113,7 @@ export async function checkRateLimit(
           .collection(RATE_LIMIT_COLLECTION)
           .doc(docId)
           .update({
-            count: admin.firestore.FieldValue.increment(1),
+            count: FieldValue.increment(1),
           });
       }
     } else {
@@ -139,7 +139,13 @@ export async function checkRateLimit(
 /**
  * Get IP address from request
  */
-export function getIPAddress(req: any): string {
+export function getIPAddress(req: {
+  headers?: Record<string, string | string[] | undefined>;
+  ip?: string;
+}): string {
+  if (!req.headers) {
+    return req.ip || "unknown";
+  }
   return (
     (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
     (req.headers["x-real-ip"] as string) ||
