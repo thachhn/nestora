@@ -73,7 +73,6 @@ export async function sendWelcomeEmail(
 
   try {
     await transporter.sendMail(mailOptions);
-    logger.info(`Welcome email sent to ${email} for product ${productId}`);
   } catch (error) {
     logger.error(
       `Failed to send welcome email to ${email} for product ${productId}:`,
