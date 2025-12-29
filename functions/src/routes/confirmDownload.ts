@@ -74,10 +74,6 @@ export const confirmDownload = onRequest({}, async (req, res) => {
       return;
     }
 
-    logger.info(
-      `OTP validated for ${email}, product ${productId}, file download authorized`
-    );
-
     // Get file path and send file for download with email replacement
     const filePath = getFilePath(productId as PruductId);
     await sendFile(res, filePath, productId as PruductId, email);

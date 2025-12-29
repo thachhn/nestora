@@ -95,6 +95,13 @@ export const requestDownload = onRequest({}, async (req, res) => {
     const hasAccess = await verifyUserProduct(emailLower, productId);
 
     if (!hasAccess) {
+      if (!isPayment) {
+        res.status(400).json({
+          error:
+            "Email này chưa được đăng ký mua hàng. Vui lòng thanh toán trước.",
+        });
+        return;
+      }
       // User doesn't have access - create payment code
       // Get product price from PRODUCT_MAP
       const productInfo = PRODUCT_MAP[productId as PruductId];

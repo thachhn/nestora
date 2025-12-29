@@ -11,8 +11,15 @@ import { setGlobalOptions } from "firebase-functions/v2";
 import * as admin from "firebase-admin";
 import * as dotenv from "dotenv";
 
-// Load environment variables from .env file (for local development)
-dotenv.config();
+// Load environment variables from .env file (for local development only)
+// On Google Cloud Functions, environment variables are set via Firebase Secrets
+// Only load dotenv when running locally (emulator) or when GCLOUD_PROJECT is not set
+// Suppress dotenv logs to avoid noise in production logs
+const isLocal =
+  process.env.FUNCTIONS_EMULATOR === "true" || !process.env.GCLOUD_PROJECT;
+if (isLocal) {
+  dotenv.config({ quiet: true });
+}
 
 // Initialize Firebase Admin
 admin.initializeApp();

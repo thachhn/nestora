@@ -49,7 +49,6 @@ export async function sendOTPEmail(
 
   try {
     await transporter.sendMail(mailOptions);
-    logger.info(`OTP email sent to ${email}`);
   } catch (error) {
     logger.error(`Failed to send OTP email to ${email}:`, error);
     throw new Error("Failed to send OTP email");

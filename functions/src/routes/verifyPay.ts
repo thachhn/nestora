@@ -92,14 +92,12 @@ export const verifyPay = onRequest({}, async (req, res) => {
 
     const result = await grantProductAccess(emailLower, productId);
 
-    logger.info(
-      `User ${emailLower} ${result.status} with product ${productId} via payment code ${uuid}`
-    );
-
     // Mark PayCode as used
     await markPayCodeAsUsed(uuid);
 
-    logger.info(`Payment verified and processed successfully: ${uuid}`);
+    logger.info(
+      `User ${emailLower} ${result.status} with product ${productId} via payment code ${uuid}`
+    );
 
     res.status(200).json({
       success: true,
