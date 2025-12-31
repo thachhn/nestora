@@ -115,7 +115,7 @@ export const requestDownload = onRequest({}, async (req, res) => {
       const amount = productInfo.price;
       const { metadata } = req.body;
 
-      // Generate payment code: NE + YYMMDDHHMMSS + 10 random characters
+      // Generate payment code:
       const paymentCode = generatePaymentCode();
       const uuid = paymentCode.substring(2); // Extract UUID (22 characters: timestamp + random)
 

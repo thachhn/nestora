@@ -31,8 +31,8 @@ export function generateUserCode(): string {
 
 /**
  * Generate payment code with timestamp
- * Format: NES + YYMMDDHHMMSS (12 chars) + 10 random characters
- * Total: 25 characters
+ * Format: NE + YYMMDDHHMM (10 chars) + 6 random characters
+ * Total: 18 characters
  */
 export function generatePaymentCode(): string {
   const now = new Date();
@@ -41,14 +41,13 @@ export function generatePaymentCode(): string {
   const day = String(now.getDate()).padStart(2, "0"); // DD
   const hours = String(now.getHours()).padStart(2, "0"); // HH
   const minutes = String(now.getMinutes()).padStart(2, "0"); // MM
-  const seconds = String(now.getSeconds()).padStart(2, "0"); // SS
 
-  const timestamp = `${year}${month}${day}${hours}${minutes}${seconds}`; // YYMMDDHHMMSS
+  const timestamp = `${year}${month}${day}${hours}${minutes}`; // YYMMDDHHMM
 
-  // Generate 10 random characters
+  // Generate 6 random characters
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let randomPart = "";
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 6; i++) {
     randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
   }
 
@@ -56,14 +55,14 @@ export function generatePaymentCode(): string {
 }
 
 /**
- * Extract UUID from payment code (remove "NES" prefix)
- * Format: YYMMDDHHMMSS (12 chars) + 10 random characters = 22 characters
+ * Extract UUID from payment code (remove "NE" prefix)
+ * Format: YYMMDDHHMM (10 chars) + 6 random characters = 16 characters
  */
 export function extractUuidFromPaymentCode(code: string): string | null {
-  if (!code.startsWith("NE") || code.length !== 24) {
+  if (!code.startsWith("NE") || code.length !== 18) {
     return null;
   }
-  return code.substring(2); // Remove "NES" prefix, return 22 characters (timestamp + random)
+  return code.substring(2); // Remove "NE" prefix, return 16 characters (timestamp + random)
 }
 
 export function validateRequest(
