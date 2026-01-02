@@ -1,5 +1,6 @@
 export enum PruductId {
   TRUY_TIM_NGOI_VUA = "truy-tim-ngoi-vua",
+  MEMOMI = "memomi",
 }
 
 const emailTemplate = (id: string) => `
@@ -42,9 +43,9 @@ Thầy cô có thể xem hướng dẫn tải file tại đây: https://drive.go
 
 Lưu ý:
 
-- Vì dữ liệu của ứng dụng được lưu vào trình duyệt web, nên nếu thầy cô xóa lịch sử trình duyệt hoặc cài lại máy tính có thể gây ra mất dữ liệu. Vì thế, thầy cô hãy thường xuyên xuất dữ liệu ra file EXCEL nhé!
+- Vì dữ liệu của ứng dụng được lưu vào trình duyệt web, nên nếu thầy cô xóa lịch sử trình duyệt hoặc cài lại máy tính có thể gây ra mất dữ liệu. Vì thế, thầy cô hãy thường xuyên xuất dữ liệu để lưu trữ!
 
-- Trước khi cập nhật phiên bản mới, thầy cô xuất dữ liệu ra file Excel để tránh bị lỗi dữ liệu.
+- Trước khi cập nhật phiên bản mới, thầy cô xuất dữ liệu ra file để tránh bị lỗi dữ liệu.
 
 - Khi có tính năng mới, thầy cô chỉ cần tải lại file cài đặt ở link trên. Thầy cô theo dõi Tiktok hoặc giữ liên lạc qua Zalo để cập nhật tính năng mới mình sẽ thông báo trên kênh nhé!
 
@@ -61,5 +62,12 @@ export const PRODUCT_MAP = {
     price: 49000,
     emailTemplate: emailTemplate(PruductId.TRUY_TIM_NGOI_VUA),
     textTemplate: textTemplate(PruductId.TRUY_TIM_NGOI_VUA),
+  },
+  [PruductId.MEMOMI]: {
+    name: "Ghép hình giải đố - MEMOMI",
+    file: "memomi/memomi.html",
+    price: 49000,
+    emailTemplate: emailTemplate(PruductId.MEMOMI),
+    textTemplate: textTemplate(PruductId.MEMOMI),
   },
 };
