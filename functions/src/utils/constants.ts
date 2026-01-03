@@ -18,9 +18,9 @@ const emailTemplate = (id: string) => `
 
         <p><strong>Lưu ý:</strong></p>
         <ul style="line-height: 1.8;">
-          <li>Vì dữ liệu của ứng dụng được lưu vào trình duyệt web, nên nếu thầy cô xóa lịch sử trình duyệt hoặc cài lại máy tính có thể gây ra mất dữ liệu. Vì thế, thầy cô hãy thường xuyên xuất dữ liệu ra file EXCEL nhé!</li>
+          <li>Vì dữ liệu của ứng dụng được lưu vào trình duyệt web, nên nếu thầy cô xóa lịch sử trình duyệt hoặc cài lại máy tính có thể gây ra mất dữ liệu. Vì thế, thầy cô hãy thường xuyên xuất dữ liệu để lưu trữ!</li>
 
-          <li>Trước khi cập nhật phiên bản mới, thầy cô xuất dữ liệu ra file Excel để tránh bị lỗi dữ liệu.</li>
+          <li>Trước khi cập nhật phiên bản mới, thầy cô xuất dữ liệu ra file để tránh bị lỗi dữ liệu.</li>
 
           <li>Khi có tính năng mới, thầy cô chỉ cần tải lại file cài đặt ở link trên. Thầy cô theo dõi Tiktok hoặc giữ liên lạc qua Zalo để cập nhật tính năng mới mình sẽ thông báo trên kênh nhé!</li>
 
