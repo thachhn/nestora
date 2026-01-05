@@ -13,6 +13,7 @@ import * as logger from "firebase-functions/logger";
 const PRODUCT_FILE_MAP: Record<PruductId, string> = {
   [PruductId.TRUY_TIM_NGOI_VUA]: "truy-tim-ngoi-vua/truy_tim_ngoi_vua.html",
   [PruductId.MEMOMI]: "memomi/memomi.html",
+  [PruductId.VIRTUAL_GALLERY]: "virtual-gallery/virtual-gallery.html",
 };
 
 /**

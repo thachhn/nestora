@@ -1,6 +1,7 @@
 export enum PruductId {
   TRUY_TIM_NGOI_VUA = "truy-tim-ngoi-vua",
   MEMOMI = "memomi",
+  VIRTUAL_GALLERY = "virtual-gallery",
 }
 
 const emailTemplate = (id: string) => `
@@ -69,5 +70,12 @@ export const PRODUCT_MAP = {
     price: 49000,
     emailTemplate: emailTemplate(PruductId.MEMOMI),
     textTemplate: textTemplate(PruductId.MEMOMI),
+  },
+  [PruductId.VIRTUAL_GALLERY]: {
+    name: "Phòng trưng bày ảnh",
+    file: "virtual-gallery/virtual-gallery.html",
+    price: 49000,
+    emailTemplate: emailTemplate(PruductId.VIRTUAL_GALLERY),
+    textTemplate: textTemplate(PruductId.VIRTUAL_GALLERY),
   },
 };
