@@ -44,7 +44,7 @@ export async function sendOTPEmail(
         </body>
       </html>
     `,
-    text: `Your OTP code for file download is: ${otp}. This code will expire in 10 minutes.`,
+    text: `Mã OTP của bạn là: ${otp}. Mã OTP sẽ hết hạn sau 10 phút.`,
   };
 
   try {
