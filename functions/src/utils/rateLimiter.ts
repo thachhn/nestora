@@ -5,6 +5,7 @@
 
 import * as admin from "firebase-admin";
 import { Timestamp, FieldValue } from "firebase-admin/firestore";
+import * as logger from "firebase-functions/logger";
 
 const RATE_LIMIT_COLLECTION = "rate_limits";
 
@@ -24,19 +25,13 @@ export interface RateLimitConfig {
   blockDurationMinutes?: number; // Block duration after exceeding limit
 }
 
-const DEFAULT_CONFIG: RateLimitConfig = {
-  maxRequests: 10,
-  windowMinutes: 15,
-  blockDurationMinutes: 30,
-};
-
 /**
  * Check and enforce rate limit
  * Returns { allowed: true } if request is allowed, { allowed: false, message } if blocked
  */
 export async function checkRateLimit(
   key: string, // IP address or email
-  config: RateLimitConfig = DEFAULT_CONFIG
+  config: RateLimitConfig
 ): Promise<{ allowed: boolean; message?: string; retryAfter?: number }> {
   const db = admin.firestore();
   const now = Timestamp.now();
@@ -153,3 +148,68 @@ export function getIPAddress(req: {
     "unknown"
   );
 }
+
+const DEFAULT_CONFIG: RateLimitConfig = {
+  maxRequests: 10,
+  windowMinutes: 15,
+  blockDurationMinutes: 30,
+};
+
+type RATE_LIMIT_TYPES = "request_download" | "get_paycode_by_collaborators";
+
+export const RATE_LIMIT_CONFIG: Record<
+  RATE_LIMIT_TYPES,
+  {
+    getDocId: (id: string) => string;
+    config: RateLimitConfig;
+  }
+> = {
+  request_download: {
+    getDocId: (id: string) => `request_download_${id.toLowerCase()}`,
+    config: DEFAULT_CONFIG,
+  },
+  get_paycode_by_collaborators: {
+    getDocId: (id: string) =>
+      `get_paycode_by_collaborators_${id.toLowerCase()}`,
+    config: {
+      maxRequests: 30,
+      windowMinutes: 15,
+      blockDurationMinutes: 30,
+    },
+  },
+};
+
+export const checkRequestRateLimit = async (
+  req: {
+    headers?: Record<string, string | string[] | undefined>;
+    ip?: string;
+    body?: {
+      email?: string;
+    };
+  },
+  type: RATE_LIMIT_TYPES
+): Promise<boolean> => {
+  const ipAddress = getIPAddress(req);
+  const email = req?.body?.email || "";
+  const { getDocId, config } = RATE_LIMIT_CONFIG[type];
+
+  // Rate limiting: Check IP and email limits
+
+  // Rate limit by IP
+  const ipRateLimit = await checkRateLimit(getDocId(ipAddress), config);
+
+  if (!ipRateLimit.allowed) {
+    logger.warn(`Rate limit exceeded for IP: ${ipAddress}`);
+    return true;
+  }
+
+  // Rate limit by email
+  const emailRateLimit = await checkRateLimit(getDocId(email), config);
+
+  if (!emailRateLimit.allowed) {
+    logger.warn(`Rate limit exceeded for email: ${email}`);
+    return true;
+  }
+
+  return false;
+};

@@ -14,6 +14,7 @@ export type PayCodeModel = {
   productId: PruductId;
   amount: number;
   metadata: string;
+  refCode: string | null;
   used: boolean;
   createdAt: Timestamp;
   updatedAt: Timestamp;
@@ -41,6 +42,7 @@ export async function createPayCode(
     productId: payCodeData.productId,
     amount: payCodeData.amount,
     metadata: payCodeData.metadata,
+    refCode: payCodeData.refCode || null,
     used: payCodeData.used || false,
     createdAt: now,
     updatedAt: now,
@@ -102,4 +104,37 @@ export async function markPayCodeAsUsed(uuid: string): Promise<void> {
     used: true,
     updatedAt: Timestamp.now(),
   });
+}
+
+/**
+ * Get PayCodes by refCode and date range
+ */
+export async function getPayCodesByRefCodeAndDateRange(
+  refCode: string,
+  startDate: Timestamp,
+  endDate: Timestamp
+): Promise<PayCodeModel[]> {
+  const db = admin.firestore();
+  const querySnapshot = await db
+    .collection(PAYCODE_COLLECTION)
+    .where("refCode", "==", refCode)
+    .where("createdAt", ">=", startDate)
+    .where("createdAt", "<=", endDate)
+    .get();
+
+  return querySnapshot.docs.map((doc) => doc.data() as PayCodeModel);
+}
+
+export async function getPayCodesByDateRange(
+  startDate: Timestamp,
+  endDate: Timestamp
+): Promise<PayCodeModel[]> {
+  const db = admin.firestore();
+  const querySnapshot = await db
+    .collection(PAYCODE_COLLECTION)
+    .where("createdAt", ">=", startDate)
+    .where("createdAt", "<=", endDate)
+    .get();
+
+  return querySnapshot.docs.map((doc) => doc.data() as PayCodeModel);
 }

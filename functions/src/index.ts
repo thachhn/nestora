@@ -36,3 +36,5 @@ export { confirmDownload } from "./routes/confirmDownload";
 export { addUser } from "./routes/addUser";
 export { verifyPay } from "./routes/verifyPay";
 export { checkPayCode } from "./routes/checkPayCode";
+export { getPayCodeByCollaborators } from "./routes/getPayCodeByCollaborators";
+export { createInternalUserHandler as createInternalUser } from "./routes/createInternalUser";

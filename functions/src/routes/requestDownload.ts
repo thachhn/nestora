@@ -16,7 +16,7 @@ import { verifyUserProduct } from "../models/User";
 import { createPayCode } from "../models/PayCode";
 import { PruductId, PRODUCT_MAP } from "../utils/constants";
 import { initHandler, handleError } from "../utils/handler";
-import { checkRateLimit, getIPAddress } from "../utils/rateLimiter";
+import { checkRequestRateLimit } from "../utils/rateLimiter";
 
 export const requestDownload = onRequest({}, async (req, res) => {
   // Initialize handler (CORS, method validation)
@@ -55,39 +55,15 @@ export const requestDownload = onRequest({}, async (req, res) => {
     }
 
     // Rate limiting: Check IP and email limits
-    const ipAddress = getIPAddress(req);
     const emailLower = email.toLowerCase();
 
-    // Rate limit by IP: max 10 requests per 15 minutes
-    const ipRateLimit = await checkRateLimit(ipAddress, {
-      maxRequests: 10,
-      windowMinutes: 15,
-      blockDurationMinutes: 30,
-    });
+    // Rate limit by IP
+    const isRateLimited = await checkRequestRateLimit(req, "request_download");
 
-    if (!ipRateLimit.allowed) {
+    if (isRateLimited) {
       res.status(429).json({
-        error:
-          ipRateLimit.message || "Quá nhiều yêu cầu. Vui lòng thử lại sau.",
+        error: "Quá nhiều yêu cầu. Vui lòng thử lại sau.",
       });
-      logger.warn(`Rate limit exceeded for IP: ${ipAddress}`);
-      return;
-    }
-
-    // Rate limit by email: max 5 requests per 15 minutes (prevent email spam)
-    const emailRateLimit = await checkRateLimit(`email_${emailLower}`, {
-      maxRequests: 5,
-      windowMinutes: 15,
-      blockDurationMinutes: 30,
-    });
-
-    if (!emailRateLimit.allowed) {
-      res.status(429).json({
-        error:
-          emailRateLimit.message ||
-          "Quá nhiều yêu cầu cho email này. Vui lòng thử lại sau.",
-      });
-      logger.warn(`Rate limit exceeded for email: ${emailLower}`);
       return;
     }
 
@@ -113,7 +89,7 @@ export const requestDownload = onRequest({}, async (req, res) => {
       }
 
       const amount = productInfo.price;
-      const { metadata } = req.body;
+      const { metadata, refCode } = req.body;
 
       // Generate payment code:
       const paymentCode = generatePaymentCode();
@@ -125,6 +101,7 @@ export const requestDownload = onRequest({}, async (req, res) => {
         productId: productId as PruductId,
         amount: amount,
         metadata: metadata || "",
+        refCode: refCode || null,
       });
 
       logger.info(
