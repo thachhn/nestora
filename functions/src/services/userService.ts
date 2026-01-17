@@ -8,7 +8,6 @@ import { getUserByEmail, addProductToUser, upsertUser } from "../models/User";
 import { generateUserCode } from "../utils/validator";
 import { getTemplateByProductId } from "../utils/templates";
 import { sendWelcomeEmail } from "./mailer";
-import { PruductId } from "../utils/constants";
 
 export type UserAccessResult = {
   email: string;
@@ -25,7 +24,7 @@ export type UserAccessResult = {
  */
 export async function grantProductAccess(
   email: string,
-  productId: PruductId
+  productId: string
 ): Promise<UserAccessResult> {
   const emailLower = email.toLowerCase();
   const existingUser = await getUserByEmail(emailLower);

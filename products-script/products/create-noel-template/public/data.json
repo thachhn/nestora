@@ -1,0 +1,13 @@
+{
+  "title": "Tạo template thiệp Noel",
+  "productId": "create-noel-template",
+  "introFeatures": [
+    {
+      "text": "Thầy cô truy cập link Canvas -> Chọn Tệp -> Chọn \"Tạo bản sao\" để chỉnh sửa theo ý của thầy cô nhé."
+    }
+  ],
+  "linkImage": "images/noel-canvas-template.jpg",
+  "pagePath": "https://www.canva.com/design/DAG7KHn1TSc/5gJB3J9iwg7kORiz7AoMOw/edit",
+  "isFree": true,
+  "isComingSoon": false
+}

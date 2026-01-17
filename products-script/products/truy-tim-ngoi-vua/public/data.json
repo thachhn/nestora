@@ -1,0 +1,80 @@
+{
+  "title": "Truy tìm ngôi vua",
+  "productId": "truy-tim-ngoi-vua",
+  "introFeatures": [
+    {
+      "text": "Ứng dụng quản lý điểm thưởng học sinh, tạo cảm giác thi đua trong lớp học."
+    },
+    {
+      "text": "Tải về sử dụng ngay không cần Internet, chạy được cho cả Window / Macbook."
+    },
+    {
+      "text": "Chỉ một file html duy nhất, không cần cài đặt, không sợ virus, giống như mở file PDF."
+    }
+  ],
+  "features": [
+    {
+      "text": "Quản lí được nhiều lớp học không giới hạn.",
+      "link": {
+        "href": "https://www.tiktok.com/@tinhocnestora/video/7582210513594076437",
+        "text": "Xem thêm"
+      }
+    },
+    {
+      "text": "Nhập và xuất dữ liệu dễ dàng bằng file Excel.",
+      "link": {
+        "href": "https://www.tiktok.com/@tinhocnestora/video/7582210513594076437",
+        "text": "Xem thêm"
+      }
+    },
+    {
+      "text": "Chức năng gọi tên học sinh ngẫu nhiên theo cấp bậc, giới tính.",
+      "link": {
+        "href": "https://www.tiktok.com/@tinhocnestora/video/7583322287089175826",
+        "text": "Xem thêm"
+      }
+    },
+    {
+      "text": "Hỗ trợ đa ngôn ngữ: Tiếng Việt, Tiếng Anh. Phù hợp cho thầy cô dạy ngoại ngữ.",
+      "link": {
+        "href": "https://www.tiktok.com/@tinhocnestora/video/7582939851650403604",
+        "text": "Xem thêm"
+      }
+    },
+    {
+      "text": "Cho phép cộng điểm, trừ điểm nhanh hàng loạt nhanh chóng.",
+      "link": {
+        "href": "https://www.tiktok.com/@tinhocnestora/video/7584796610652032277",
+        "text": "Xem thêm"
+      }
+    },
+    {
+      "text": "Đổi điểm lấy quà.",
+      "link": {
+        "href": "https://www.tiktok.com/@tinhocnestora/video/7588139868220574983",
+        "text": "Xem thêm"
+      }
+    },
+    {
+      "text": "Chia học sinh thành nhiều nhóm để thi đua.",
+      "link": {
+        "href": "https://www.tiktok.com/@tinhocnestora/video/7588509268383419668",
+        "text": "Xem thêm"
+      }
+    },
+    {
+      "text": "Khi ứng dụng cập nhật chức năng mới, thầy cô được cập nhật miễn phí nhé.",
+      "link": {
+        "href": "https://www.tiktok.com/@tinhocnestora/video/7581827876320742663",
+        "text": "Xem thêm"
+      }
+    }
+  ],
+  "linkDemo": "https://drive.google.com/file/d/1ID65smx92Zyt1Ws0fHXZ0u6e-ljdeyoq/view",
+  "linkImage": "images/truy-tim-ngoi-vua.jpeg",
+  "price": 49000,
+  "oldPrice": 79000,
+  "isFree": false,
+  "isComingSoon": false,
+  "version": "1.0.10"
+}

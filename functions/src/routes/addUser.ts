@@ -7,7 +7,7 @@
 import { onRequest } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 import { validateRequest, isValidEmail } from "../utils/validator";
-import { PruductId } from "../utils/constants";
+import { PRODUCT_MAP } from "../utils/constants";
 import { initHandler, handleError } from "../utils/handler";
 import { grantProductAccess } from "../services/userService";
 
@@ -51,8 +51,10 @@ export const addUser = onRequest({}, async (req, res) => {
       return;
     }
 
+    const allIds = Object.keys(PRODUCT_MAP);
+
     // Validate productId
-    if (!productId || !Object.values(PruductId).includes(productId)) {
+    if (!productId || !allIds.includes(productId)) {
       res.status(400).json({ error: "Invalid productId" });
       return;
     }
@@ -61,7 +63,7 @@ export const addUser = onRequest({}, async (req, res) => {
     const results = [];
 
     for (const email of emails) {
-      const result = await grantProductAccess(email, productId as PruductId);
+      const result = await grantProductAccess(email, productId);
       results.push(result);
     }
 

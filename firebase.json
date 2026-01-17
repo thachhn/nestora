@@ -18,7 +18,8 @@
         "*.local",
         "src/**",
         ".env",
-        ".env.*"
+        ".env.*",
+        "products-script/**"
       ],
       "predeploy": [
         "npm --prefix \"$RESOURCE_DIR\" run lint",

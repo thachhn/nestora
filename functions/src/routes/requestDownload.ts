@@ -14,7 +14,7 @@ import { generateOTP, storeOTP, resetOTPAttempts } from "../models/OTP";
 import { sendOTPEmail } from "../services/mailer";
 import { verifyUserProduct } from "../models/User";
 import { createPayCode } from "../models/PayCode";
-import { PruductId, PRODUCT_MAP } from "../utils/constants";
+import { PRODUCT_MAP } from "../utils/constants";
 import { initHandler, handleError } from "../utils/handler";
 import { checkRequestRateLimit } from "../utils/rateLimiter";
 
@@ -48,8 +48,10 @@ export const requestDownload = onRequest({}, async (req, res) => {
       return;
     }
 
+    const allIds = Object.keys(PRODUCT_MAP);
+
     // Validate productId
-    if (!productId || !Object.values(PruductId).includes(productId)) {
+    if (!productId || !allIds.includes(productId)) {
       res.status(400).json({ error: "Sai định dạng sản phẩm" });
       return;
     }
@@ -80,7 +82,7 @@ export const requestDownload = onRequest({}, async (req, res) => {
       }
       // User doesn't have access - create payment code
       // Get product price from PRODUCT_MAP
-      const productInfo = PRODUCT_MAP[productId as PruductId];
+      const productInfo = PRODUCT_MAP[productId];
       if (!productInfo || !productInfo.price) {
         res.status(400).json({
           error: "Không tìm thấy thông tin sản phẩm",
@@ -98,7 +100,7 @@ export const requestDownload = onRequest({}, async (req, res) => {
       // Create PayCode record
       await createPayCode(uuid, {
         email: emailLower,
-        productId: productId as PruductId,
+        productId: productId,
         amount: amount,
         metadata: metadata || "",
         refCode: refCode || null,

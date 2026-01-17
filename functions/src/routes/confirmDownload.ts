@@ -7,9 +7,9 @@ import { onRequest } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 import { validateRequest, isValidEmail, isValidOTP } from "../utils/validator";
 import { validateOTP } from "../models/OTP";
-import { PruductId } from "../utils/constants";
 import { initHandler, handleError } from "../utils/handler";
 import { getFilePath, sendFile } from "../utils/fileDownload";
+import { PRODUCT_MAP } from "../utils/constants";
 
 export const confirmDownload = onRequest({}, async (req, res) => {
   // Initialize handler (CORS, method validation)
@@ -49,8 +49,10 @@ export const confirmDownload = onRequest({}, async (req, res) => {
       return;
     }
 
+    const allIds = Object.keys(PRODUCT_MAP);
+
     // Validate productId
-    if (!productId || !Object.values(PruductId).includes(productId)) {
+    if (!productId || !allIds.includes(productId)) {
       res.status(400).json({ error: "Invalid productId" });
       return;
     }
@@ -75,8 +77,8 @@ export const confirmDownload = onRequest({}, async (req, res) => {
     }
 
     // Get file path and send file for download with email replacement
-    const filePath = getFilePath(productId as PruductId);
-    await sendFile(res, filePath, productId as PruductId, email);
+    const filePath = getFilePath(productId);
+    await sendFile(res, filePath, productId, email);
   } catch (error) {
     logger.error("Error in confirmDownload:", error);
     handleError(error, res, "Internal server error");

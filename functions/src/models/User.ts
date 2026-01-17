@@ -5,14 +5,13 @@
 
 import * as admin from "firebase-admin";
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
-import { PruductId } from "../utils/constants";
 
 const USERS_COLLECTION = "users";
 
 export type UserModel = {
   email: string;
   code: string;
-  products: PruductId[];
+  products: string[];
   status: "active" | "inactive";
   createdAt: Timestamp;
   updatedAt: Timestamp;
@@ -75,7 +74,7 @@ export async function updateUser(
   const updateData: {
     updatedAt: FieldValue;
     code?: string;
-    products?: PruductId[];
+    products?: string[];
     status?: "active" | "inactive";
   } = {
     updatedAt: Timestamp.now(),
@@ -102,7 +101,7 @@ export async function updateUser(
  */
 export async function addProductToUser(
   email: string,
-  productId: PruductId
+  productId: string
 ): Promise<UserModel> {
   const db = admin.firestore();
   const emailLower = email.toLowerCase();
@@ -171,7 +170,7 @@ export async function verifyUserProduct(
     return false;
   }
 
-  return user.products.includes(productId as PruductId);
+  return user.products.includes(productId);
 }
 
 /**
@@ -192,5 +191,5 @@ export async function verifyUserCodeAndProduct(
     return false;
   }
 
-  return user.products.includes(productId as PruductId);
+  return user.products.includes(productId);
 }

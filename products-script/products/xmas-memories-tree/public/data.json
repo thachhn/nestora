@@ -1,0 +1,17 @@
+{
+  "title": "Cây thông kỷ niệm của riêng bạn",
+  "productId": "xmas-memories-tree",
+  "introFeatures": [
+    {
+      "text": "Đây là một sản phẩm của bạn cristovaoolegario chia sẻ miễn phí trên github https://github.com/cristovaoolegario/christmas-tree. Tuy nhiên để tùy chỉnh hình ảnh, màu sắc thì cần yêu cầu biết lập trình. Vì vậy mình đã chỉnh sửa lại để giúp các bạn dù không biết lập trình vẫn có thể chỉnh sửa theo ý thích."
+    },
+    {
+      "text": "Chúc Giáng sinh vui vẻ."
+    }
+  ],
+  "linkImage": "images/xmas-memories-tree.jpg",
+  "pagePath": "/external-apps?app-id=xmas-memories-tree",
+  "isFree": true,
+  "isInternal": true,
+  "buildFile": "build.js"
+}

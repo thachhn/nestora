@@ -5,13 +5,12 @@
 
 import * as admin from "firebase-admin";
 import { Timestamp } from "firebase-admin/firestore";
-import { PruductId } from "../utils/constants";
 
 const PAYCODE_COLLECTION = "PayCode";
 
 export type PayCodeModel = {
   email: string;
-  productId: PruductId;
+  productId: string;
   amount: number;
   metadata: string;
   refCode: string | null;

@@ -2,7 +2,7 @@
  * Email templates mapping by productId
  */
 
-import { PRODUCT_MAP, PruductId } from "./constants";
+import { PRODUCT_MAP } from "./constants";
 
 export interface EmailTemplate {
   subject: string;
@@ -13,10 +13,10 @@ export interface EmailTemplate {
 /**
  * Get email template by productId (without code)
  */
-export function getTemplateByProductId(productId: PruductId): EmailTemplate {
+export function getTemplateByProductId(productId: string): EmailTemplate {
   return {
-    text: PRODUCT_MAP[productId].textTemplate,
-    html: PRODUCT_MAP[productId].emailTemplate,
-    subject: PRODUCT_MAP[productId].name,
+    text: PRODUCT_MAP[productId]?.textTemplate,
+    html: PRODUCT_MAP[productId]?.emailTemplate,
+    subject: PRODUCT_MAP[productId]?.name,
   };
 }

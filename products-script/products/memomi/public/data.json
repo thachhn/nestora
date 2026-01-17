@@ -1,0 +1,45 @@
+{
+  "title": "Ghép hình giải đố - MEMOMI",
+  "productId": "memomi",
+  "introFeatures": [
+    {
+      "text": "Ứng dụng khởi động buổi học để thầy cô chiếu lên màn hình cho cả lớp cùng chơi."
+    },
+    {
+      "text": "Không chỉ đơn giản là lật các thẻ bài giống nhau, mà học sinh còn phải trả lời đúng câu hỏi để lật được thẻ bài và tìm được hình ảnh bí mật phía sau."
+    },
+    {
+      "text": "Tải về sử dụng ngay không cần Internet, chạy được cho cả Window / Macbook."
+    },
+    {
+      "text": "Chỉ một file html duy nhất, không cần cài đặt, không sợ virus, giống như mở file PDF."
+    }
+  ],
+  "features": [
+    {
+      "text": "Cho phép lựa chọn số lượng câu hỏi."
+    },
+    {
+      "text": "Cho phép lựa chọn hình ảnh cho từng câu hỏi."
+    },
+    {
+      "text": "Cho phép lựa chọn hình nền bí mật sau khi mở hết các thẻ bài."
+    },
+    {
+      "text": "Cho phép tùy chỉnh màu sắc của thẻ bài, màu của bảng câu hỏi để phù hợp với chủ đề của trò chơi."
+    },
+    {
+      "text": "Cho phép nhập câu hỏi từ file Excel theo mẫu. Dễ dàng tạo bộ câu hỏi với AI."
+    },
+    {
+      "text": "Khi ứng dụng cập nhật chức năng mới, thầy cô được cập nhật miễn phí nhé."
+    }
+  ],
+  "linkDemo": "https://drive.google.com/file/d/1Kh9mYOS26BR1XuZntgER5ijZXVikNc5T/view",
+  "linkImage": "images/memomi.gif",
+  "price": 49000,
+  "oldPrice": 69000,
+  "isFree": false,
+  "isComingSoon": false,
+  "version": "1.0.8"
+}
