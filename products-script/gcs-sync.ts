@@ -153,7 +153,6 @@ async function syncDirectory(
       successCount++;
 
       console.log(`✅ ${gcsFilePath}`);
-      console.log(`   URL: ${publicUrl}\n`);
     } catch (error) {
       errorCount++;
       console.error(`❌ Failed to upload ${gcsFilePath}:`, error);
