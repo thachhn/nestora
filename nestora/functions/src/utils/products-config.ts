@@ -15,11 +15,11 @@ export const PRODUCTS_CONFIG: ProductConfig[] = [
     file: "products/truy-tim-ngoi-vua/private/build.html",
   },
   {
-    id: "memomi",
-    name: "Ghép hình giải đố - MEMOMI",
-    buildDir: "../../mini/memory-cards",
+    id: "giai-ma-tranh",
+    name: "Giải mã tranh",
+    buildDir: "../../mini/giai-ma-tranh",
     price: 49000,
-    file: "products/memomi/private/build.html",
+    file: "products/giai-ma-tranh/private/build.html",
   },
   {
     id: "virtual-gallery",
@@ -27,6 +27,13 @@ export const PRODUCTS_CONFIG: ProductConfig[] = [
     buildDir: "../../mini/virtual-gallery",
     price: 49000,
     file: "products/virtual-gallery/private/build.html",
+  },
+  {
+    id: "memomi",
+    name: "Ghép hình giải đố - MEMOMI",
+    buildDir: "../../mini/memory-cards",
+    price: 49000,
+    file: "products/memomi/private/build.html",
   },
   // Thêm các sản phẩm khác ở đây
   // {

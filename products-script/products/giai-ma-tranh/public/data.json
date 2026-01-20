@@ -1,0 +1,45 @@
+{
+  "title": "Giải mã tranh",
+  "productId": "giai-ma-tranh",
+  "introFeatures": [
+    {
+      "text": "Ứng dụng tạo bức tranh bí mật, học sinh cần trả lời đúng các câu hỏi để tô đúng màu các vị trí trên bức tranh để tìm ra hình ảnh bí mật phía sau."
+    },
+    {
+      "text": "Thầy cô chiếu lên màn hình cho cả lớp cùng khởi động buổi học."
+    },
+    {
+      "text": "Thầy cô cũng có thể in hình và câu hỏi ra giấy để các em cùng làm nhóm."
+    },
+    {
+      "text": "Tải về sử dụng ngay không cần Internet, hổ trợ cho cả Window / Macbook."
+    },
+    {
+      "text": "Chỉ một file html duy nhất, không cần cài đặt, không sợ virus."
+    }
+  ],
+  "features": [
+    {
+      "text": "Cho phép tạo ảnh bí mật theo ý bạn."
+    },
+    {
+      "text": "Hổ trợ nhiều kích thước ảnh: từ giấy A5 tới giấy A3."
+    },
+    {
+      "text": "Cho phép nhập câu hỏi từ file Excel theo mẫu. Dễ dàng tạo bộ câu hỏi với AI."
+    },
+    {
+      "text": "Hổ trợ xuất ra file ảnh, file WORD để thầy cô in ra giấy."
+    },
+    {
+      "text": "Khi ứng dụng cập nhật chức năng mới, thầy cô được cập nhật miễn phí nhé."
+    }
+  ],
+  "linkDemo": "https://drive.google.com/file/d/1ogRAsHZZCsJnE0tiM_wvECv5HFRyEUY0/view",
+  "linkImage": "images/giai-ma-tranh.gif",
+  "price": 49000,
+  "oldPrice": 69000,
+  "isFree": false,
+  "isComingSoon": false,
+  "version": "1.0.9"
+}
