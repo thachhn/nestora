@@ -79,7 +79,7 @@ function copyProductsConfigToFunctions(): boolean {
     const sourceConfigPath = join(__dirname, "./products-config.ts");
     const destConfigPath = resolve(
       __dirname,
-      "../functions/src/utils/products-config.ts"
+      "../functions/src/utils/constants.ts"
     );
 
     if (!existsSync(sourceConfigPath)) {
