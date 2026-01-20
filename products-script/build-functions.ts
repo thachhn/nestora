@@ -79,7 +79,7 @@ function copyProductsConfigToFunctions(): boolean {
     const sourceConfigPath = join(__dirname, "./products-config.ts");
     const destConfigPath = resolve(
       __dirname,
-      "../nestora/functions/src/utils/products-config.ts"
+      "../functions/src/utils/products-config.ts"
     );
 
     if (!existsSync(sourceConfigPath)) {
