@@ -18,7 +18,7 @@ export const PRODUCTS_CONFIG: ProductConfig[] = [
     id: "giai-ma-tranh",
     name: "Giải mã tranh",
     buildDir: "../../mini/giai-ma-tranh",
-    price: 49000,
+    price: 59000,
     file: "products/giai-ma-tranh/private/build.html",
   },
   {

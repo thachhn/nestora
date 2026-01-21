@@ -12,7 +12,11 @@
       "text": "Chỉ một file html duy nhất, không cần cài đặt, không sợ virus."
     },
     {
-      "text": "Lưu ý: Đây là ứng dụng HTML chỉ chạy ở máy tính người tải file. Không thể chia sẻ link để người khác xem được. Nếu thầy cô muốn tạo link để chia sẻ cho người khác xem, vui lòng liên hệ mình nhé."
+      "text": "Bạn có thể liên hệ mình để chia sẻ link phòng tranh cho bạn bè cùng tham quan.",
+      "link": {
+        "href": "https://nestora.edu.vn/external-apps?app-id=virtual-gallery-setup&zid=1768928131473",
+        "text": "Xem thử ngay"
+      }
     }
   ],
   "features": [
