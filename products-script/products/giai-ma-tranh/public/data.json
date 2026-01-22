@@ -12,7 +12,7 @@
       "text": "Thầy cô cũng có thể in hình và câu hỏi ra giấy để các em cùng làm nhóm."
     },
     {
-      "text": "Tải về sử dụng ngay không cần Internet, hổ trợ cho cả Window / Macbook."
+      "text": "Tải về sử dụng ngay không cần Internet, hỗ trợ cho cả Window / Macbook."
     },
     {
       "text": "Chỉ một file html duy nhất, không cần cài đặt, không sợ virus."
@@ -23,13 +23,13 @@
       "text": "Cho phép tạo ảnh bí mật theo ý bạn."
     },
     {
-      "text": "Hổ trợ nhiều kích thước ảnh: từ giấy A5 tới giấy A3."
+      "text": "Hỗ trợ nhiều kích thước ảnh: từ giấy A5 tới giấy A3."
     },
     {
       "text": "Cho phép nhập câu hỏi từ file Excel theo mẫu. Dễ dàng tạo bộ câu hỏi với AI."
     },
     {
-      "text": "Hổ trợ xuất ra file ảnh, file WORD để thầy cô in ra giấy."
+      "text": "Hỗ trợ xuất ra file ảnh, file WORD để thầy cô in ra giấy."
     },
     {
       "text": "Khi ứng dụng cập nhật chức năng mới, thầy cô được cập nhật miễn phí nhé."
@@ -41,5 +41,5 @@
   "oldPrice": 79000,
   "isFree": false,
   "isComingSoon": false,
-  "version": "1.0.9"
+  "version": "1.0.11"
 }
