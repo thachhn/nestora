@@ -25,7 +25,7 @@ const FUNCTIONS = [
 function setEnvForService(serviceName, envVars) {
   try {
     console.log(`Setting environment variables for ${serviceName}...`);
-    
+
     execSync(
       `gcloud run services update ${serviceName} ` +
       `--project=${PROJECT_ID} ` +
@@ -80,7 +80,7 @@ let updatedCount = 0;
 // Set for all functions
 for (const func of FUNCTIONS) {
   const serviceName = findServiceName(func);
-  
+
   if (serviceName) {
     if (setEnvForService(serviceName, envVarsString)) {
       updatedCount++;
