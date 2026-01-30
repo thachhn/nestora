@@ -85,6 +85,8 @@ const textTemplate = (
 
 Thầy cô có thể xem hướng dẫn tải file tại đây: https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view
 
+Thầy cô tham gia nhóm Zalo Tin Học Nestora tại đây để nhận thông báo khi ứng dụng có tính năng mới cần cập nhật nhé: https://zalo.me/g/qlhbfy105
+
 Lưu ý:
 
 - Vì dữ liệu của ứng dụng được lưu vào trình duyệt web, nên nếu thầy cô xóa lịch sử trình duyệt hoặc cài lại máy tính có thể gây ra mất dữ liệu. Vì thế, thầy cô hãy thường xuyên xuất dữ liệu để lưu trữ!
