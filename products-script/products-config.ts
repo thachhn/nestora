@@ -45,7 +45,6 @@ export const PRODUCTS_CONFIG: ProductConfig[] = [
   // },
 ];
 
-
 const emailTemplate = (id: string) => `
   <!DOCTYPE html>
   <html>
@@ -58,6 +57,8 @@ const emailTemplate = (id: string) => `
         <p>Email của thầy cô đã được thêm vào hệ thống. Thầy cô hãy tải file tại đây: <a href="https://nestora.edu.vn/product/${id}" style="color: #4CAF50;">https://nestora.edu.vn/product/${id}</a></p>
 
         <p>Thầy cô có thể xem hướng dẫn tải file tại đây: <a href="https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view" style="color: #4CAF50;">https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view</a></p>
+
+         <p>Thầy cô tham gia nhóm Zalo Tin Học Nestora tại đây để nhận thông báo khi ứng dụng có tính năng mới cần cập nhật nhé: <a href="https://zalo.me/g/qlhbfy105" style="color: #4CAF50;">https://zalo.me/g/qlhbfy105</a></p>
 
         <p><strong>Lưu ý:</strong></p>
         <ul style="line-height: 1.8;">
@@ -98,20 +99,26 @@ Lưu ý:
 
 Cảm ơn thầy cô. Chúc thầy cô có những tiết dạy thú vị.`;
 
-export const PRODUCT_MAP = PRODUCTS_CONFIG.reduce((acc, product) => {
-  const productId = product.id;
-  acc[productId] = {
-    name: product.name,
-    file: product.file,
-    price: product.price,
-    emailTemplate: emailTemplate(product.id),
-    textTemplate: textTemplate(product.id),
-  };
-  return acc;
-}, {} as Record<string, {
-  name: string;
-  file: string;
-  price: number;
-  emailTemplate: string;
-  textTemplate: string;
-}>);
+export const PRODUCT_MAP = PRODUCTS_CONFIG.reduce(
+  (acc, product) => {
+    const productId = product.id;
+    acc[productId] = {
+      name: product.name,
+      file: product.file,
+      price: product.price,
+      emailTemplate: emailTemplate(product.id),
+      textTemplate: textTemplate(product.id),
+    };
+    return acc;
+  },
+  {} as Record<
+    string,
+    {
+      name: string;
+      file: string;
+      price: number;
+      emailTemplate: string;
+      textTemplate: string;
+    }
+  >
+);
