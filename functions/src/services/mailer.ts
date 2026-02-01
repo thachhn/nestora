@@ -9,6 +9,7 @@ import { ENV_CONFIGS } from "../utils/config";
 const sendResendEmail = async ({
   from = ENV_CONFIGS.EMAIL_FROM || "",
   replyTo = ENV_CONFIGS.EMAIL_REPLY_TO || "",
+  pass,
   to,
   subject,
   html,
@@ -16,13 +17,12 @@ const sendResendEmail = async ({
 }: {
   from?: string;
   replyTo?: string;
+  pass?: string;
   to: string;
   subject: string;
   html: string;
   text: string;
 }): Promise<{ id: string }> => {
-  const RESEND_API_KEY = ENV_CONFIGS.EMAIL_PASS;
-
   const emailData = {
     from: `Tin Học Nestora <${from}>`,
     to: [to],
@@ -36,7 +36,7 @@ const sendResendEmail = async ({
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
+        Authorization: `Bearer ${pass}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(emailData),
@@ -65,6 +65,7 @@ export async function sendOTPEmail(
   try {
     const data = await sendResendEmail({
       to: email,
+      pass: ENV_CONFIGS.EMAIL_OTP_PASS,
       subject: title,
       html: `
       <!DOCTYPE html>
@@ -105,6 +106,7 @@ export async function sendWelcomeEmail(
   try {
     const data = await sendResendEmail({
       to: email,
+      pass: ENV_CONFIGS.EMAIL_WELCOME_PASS,
       subject: template.subject,
       html: template.html,
       text: template.text,
