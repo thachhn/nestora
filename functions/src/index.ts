@@ -9,12 +9,6 @@
 
 import { setGlobalOptions } from "firebase-functions/v2";
 import * as admin from "firebase-admin";
-import * as dotenv from "dotenv";
-
-// Load environment variables from .env file (for local development)
-dotenv.config({
-  quiet: true,
-});
 
 // Initialize Firebase Admin
 admin.initializeApp();

@@ -137,9 +137,11 @@ export const requestDownload = onRequest({}, async (req, res) => {
 
     const title = `Mã OTP để tải file là ${otp}`;
     // Send OTP email
-    await sendOTPEmail(email, otp, title);
+    const sendMailId = await sendOTPEmail(email, otp, title);
 
-    logger.info(`OTP sent to ${email} for product ${productId}`);
+    logger.info(
+      `OTP sent to ${email} for product ${productId} with sendMailId ${sendMailId}`
+    );
 
     res.status(200).json({
       success: true,

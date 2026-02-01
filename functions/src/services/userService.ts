@@ -35,9 +35,11 @@ export async function grantProductAccess(
 
     // Send welcome email (notification only, no code)
     const template = getTemplateByProductId(productId);
-    await sendWelcomeEmail(emailLower, productId, template);
+    const sendMailId = await sendWelcomeEmail(emailLower, productId, template);
 
-    logger.info(`User ${emailLower} updated: product ${productId} added`);
+    logger.info(
+      `User ${emailLower} updated: product ${productId} added with sendMailId ${sendMailId}`
+    );
 
     return {
       email: emailLower,
@@ -56,9 +58,11 @@ export async function grantProductAccess(
 
     // Send welcome email (notification only, no code)
     const template = getTemplateByProductId(productId);
-    await sendWelcomeEmail(emailLower, productId, template);
+    const sendMailId = await sendWelcomeEmail(emailLower, productId, template);
 
-    logger.info(`User ${emailLower} created with product ${productId}`);
+    logger.info(
+      `User ${emailLower} created with product ${productId} with sendMailId ${sendMailId}`
+    );
 
     return {
       email: emailLower,

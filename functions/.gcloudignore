@@ -1,10 +1,6 @@
 # This file specifies files that are *not* uploaded to Google Cloud
 # using gcloud. It follows the same syntax as .gitignore
 
-# Environment variables
-.env
-.env.*
-*.env
 
 # Compiled JavaScript files
 lib/**/*.js

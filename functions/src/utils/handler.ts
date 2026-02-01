@@ -3,7 +3,7 @@
  */
 
 import { Request, Response } from "express";
-import { apiKey } from "./config";
+import { ENV_CONFIGS } from "./config";
 
 export interface HandlerOptions {
   allowedMethods?: string[];
@@ -108,13 +108,20 @@ export function initHandler(
 
   // Validate API key if required
   if (requireApiKey) {
-    if (!validateAPIKey(req, res, apiKey as string, "x-api-key")) {
+    if (!validateAPIKey(req, res, ENV_CONFIGS.API_KEY, "x-api-key")) {
       return false;
     }
   }
 
   if (requireAuthenticationApiKey) {
-    if (!validateAPIKey(req, res, `Apikey ${apiKey}`, "Authorization")) {
+    if (
+      !validateAPIKey(
+        req,
+        res,
+        `Apikey ${ENV_CONFIGS.WEBHOOK_API_KEY}`,
+        "Authorization"
+      )
+    ) {
       return false;
     }
   }

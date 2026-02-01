@@ -1,32 +1,72 @@
+/* eslint-disable quote-props */
 /**
  * Mailer service for sending emails
  */
 
-import * as nodemailer from "nodemailer";
 import * as logger from "firebase-functions/logger";
-import { smtpConfig } from "../utils/config";
+import { ENV_CONFIGS } from "../utils/config";
 
-// Initialize nodemailer transporter
-const transporter = nodemailer.createTransport({
-  host: smtpConfig.host,
-  port: smtpConfig.port,
-  secure: smtpConfig.secure, // true for 465, false for other ports
-  auth: {
-    user: smtpConfig.user,
-    pass: smtpConfig.pass,
-  },
-});
+const sendResendEmail = async ({
+  from = ENV_CONFIGS.EMAIL_FROM || "",
+  replyTo = ENV_CONFIGS.EMAIL_REPLY_TO || "",
+  to,
+  subject,
+  html,
+  text,
+}: {
+  from?: string;
+  replyTo?: string;
+  to: string;
+  subject: string;
+  html: string;
+  text: string;
+}): Promise<{ id: string }> => {
+  const RESEND_API_KEY = ENV_CONFIGS.EMAIL_PASS;
+
+  const emailData = {
+    from: `Tin Học Nestora <${from}>`,
+    to: [to],
+    subject: subject,
+    html: html,
+    text: text,
+    reply_to: replyTo,
+  };
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(emailData),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result?.id) {
+      logger.error(`Failed to send email:`, result, result);
+      throw new Error(`Failed to send email: ${result?.error?.message}`);
+    }
+
+    console.log("Email sent successfully:", result.id);
+    return { id: result.id };
+  } catch (error) {
+    logger.error(`Failed to send email: ${error}`);
+    throw new Error(`Failed to send email: ${error}`);
+  }
+};
 
 export async function sendOTPEmail(
   email: string,
   otp: string,
   title: string
-): Promise<void> {
-  const mailOptions = {
-    from: smtpConfig.from || smtpConfig.user,
-    to: email,
-    subject: title,
-    html: `
+): Promise<string | undefined> {
+  try {
+    const data = await sendResendEmail({
+      to: email,
+      subject: title,
+      html: `
       <!DOCTYPE html>
       <html>
         <head>
@@ -44,11 +84,10 @@ export async function sendOTPEmail(
         </body>
       </html>
     `,
-    text: `Mã OTP của bạn là: ${otp}. Mã OTP sẽ hết hạn sau 10 phút.`,
-  };
+      text: `Mã OTP của bạn là: ${otp}. Mã OTP sẽ hết hạn sau 10 phút.`,
+    });
 
-  try {
-    await transporter.sendMail(mailOptions);
+    return data?.id;
   } catch (error) {
     logger.error(`Failed to send OTP email to ${email}:`, error);
     throw new Error("Failed to send OTP email");
@@ -62,17 +101,16 @@ export async function sendWelcomeEmail(
   email: string,
   productId: string,
   template: { subject: string; html: string; text: string }
-): Promise<void> {
-  const mailOptions = {
-    from: smtpConfig.from || smtpConfig.user,
-    to: email,
-    subject: template.subject,
-    html: template.html,
-    text: template.text,
-  };
-
+): Promise<string | undefined> {
   try {
-    await transporter.sendMail(mailOptions);
+    const data = await sendResendEmail({
+      to: email,
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
+    });
+
+    return data?.id;
   } catch (error) {
     logger.error(
       `Failed to send welcome email to ${email} for product ${productId}:`,
@@ -81,4 +119,6 @@ export async function sendWelcomeEmail(
     // Don't throw error to avoid breaking the addUser flow
     // Just log the error
   }
+
+  return undefined;
 }
