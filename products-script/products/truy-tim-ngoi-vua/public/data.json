@@ -1,6 +1,20 @@
 {
   "title": "Truy tìm ngôi vua",
   "productId": "truy-tim-ngoi-vua",
+  "keywords": [
+    "Đường đến ngai vàng",
+    "Đường đến ngôi vua",
+    "Quản lý lớp học",
+    "Quản lý học sinh",
+    "Điểm thưởng học sinh",
+    "Thi đua lớp học",
+    "Ứng dụng giáo viên",
+    "Quản lý điểm học sinh",
+    "Phần mềm quản lý lớp",
+    "Công cụ dạy học",
+    "Gọi tên học sinh ngẫu nhiên",
+    "Đổi điểm lấy quà"
+  ],
   "introFeatures": [
     {
       "text": "Ứng dụng quản lý điểm thưởng học sinh, tạo cảm giác thi đua trong lớp học."

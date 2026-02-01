@@ -1,6 +1,17 @@
 {
   "title": "Phòng trưng bày ảnh",
   "productId": "virtual-gallery",
+  "keywords": [
+    "Phòng trưng bày ảnh",
+    "Trưng bày hình ảnh",
+    "Gallery ảnh",
+    "Trình chiếu ảnh lớp học",
+    "Triển lãm ảnh ảo",
+    "Phòng tranh ảo",
+    "Ứng dụng trưng bày",
+    "Chiếu ảnh cho học sinh",
+    "Trưng bày tác phẩm học sinh"
+  ],
   "introFeatures": [
     {
       "text": "Ứng dụng trưng bày hình ảnh sinh động. Dùng để chiếu lên màn hình cho cả lớp cùng xem."
