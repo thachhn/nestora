@@ -56,13 +56,9 @@ const emailTemplate = (id: string) => `
       <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
         <p>Email của thầy cô đã được thêm vào hệ thống.</p>
 
-        <p>Thầy cô tham gia nhóm Zalo Tin Học Nestora tại đây để nhận thông báo khi ứng dụng có tính năng mới cần cập nhật nhé: <a href="https://zalo.me/g/qlhbfy105" style="color: #4CAF50;">https://zalo.me/g/qlhbfy105</a></p>
+        <p>Thầy cô xem hướng dẫn tải file tại đây: <a href="https://nestora.edu.vn/support" style="color: #4CAF50;">https://nestora.edu.vn/support</a></p>
 
-        <p>Thầy cô tải file tại đây: <a href="https://nestora.edu.vn/product/${id}" style="color: #4CAF50;">https://nestora.edu.vn/product/${id}</a></p>
-
-        <p><strong>Hướng dẫn tải file:</strong><br>Nhấn Mua Ngay → Nhập Email → Nhập OTP → File sẽ được tải về máy</p>
-
-        <p>Thầy cô có thể xem hướng dẫn qua video tại đây: <a href="https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view" style="color: #4CAF50;">https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view</a></p>
+        <p>Link sản phẩm: <a href="https://nestora.edu.vn/product/${id}" style="color: #4CAF50;">https://nestora.edu.vn/product/${id}</a></p>
 
         <p><strong>Lưu ý:</strong></p>
         <ul style="line-height: 1.8;">
@@ -86,14 +82,9 @@ const emailTemplate = (id: string) => `
 const textTemplate = (
   id: string
 ) => `Email của thầy cô đã được thêm vào hệ thống.
-Thầy cô tham gia nhóm Zalo Tin Học Nestora tại đây để nhận thông báo khi ứng dụng có tính năng mới cần cập nhật nhé: https://zalo.me/g/qlhbfy105
 
-Thầy cô tải file tại đây: https://nestora.edu.vn/product/${id}
-
-Hướng dẫn tải file:
-Nhấn Mua Ngay -> Nhập Email -> Nhập OTP -> File sẽ được tải về máy
-
-Thầy cô có thể xem hướng dẫn qua video tại đây: https://drive.google.com/file/d/1k9JzSz29uOSSqcbfcZlonNF5fAmp9TqP/view
+Thầy cô xem hướng dẫn tải file tại đây: https://nestora.edu.vn/support
+Link sản phẩm: https://nestora.edu.vn/product/${id}
 
 
 Lưu ý:
