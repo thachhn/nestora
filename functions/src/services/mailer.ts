@@ -24,19 +24,33 @@ const sendResendEmail = async ({
   text: string;
 }): Promise<{ id: string }> => {
   const emailData = {
-    from: `Tin Học Nestora <${from}>`,
-    to: [to],
-    subject: subject,
-    html: html,
-    text: text,
-    reply_to: replyTo,
+    Messages: [
+      {
+        From: {
+          Email: from,
+          Name: "Tin Học Nestora",
+        },
+        To: [
+          {
+            Email: to,
+          },
+        ],
+        ReplyTo: {
+          Email: replyTo,
+          Name: "Tin Học Nestora",
+        },
+        Subject: subject,
+        HTMLPart: html,
+        TextPart: text,
+      },
+    ],
   };
 
   try {
-    const response = await fetch("https://api.resend.com/emails", {
+    const response = await fetch("https://api.mailjet.com/v3.1/send", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${pass}`,
+        Authorization: `Basic ${pass}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(emailData),
@@ -44,13 +58,12 @@ const sendResendEmail = async ({
 
     const result = await response.json();
 
-    if (!response.ok || !result?.id) {
+    if (!response.ok || result?.Messages?.[0]?.Status !== "success") {
       logger.error(`Failed to send email:`, result, result);
       throw new Error(`Failed to send email: ${result?.error?.message}`);
     }
 
-    console.log("Email sent successfully:", result.id);
-    return { id: result.id };
+    return { id: result?.Messages?.[0]?.To?.[0]?.MessageID };
   } catch (error) {
     logger.error(`Failed to send email: ${error}`);
     throw new Error(`Failed to send email: ${error}`);
@@ -65,7 +78,7 @@ export async function sendOTPEmail(
   try {
     const data = await sendResendEmail({
       to: email,
-      pass: ENV_CONFIGS.EMAIL_OTP_PASS,
+      pass: ENV_CONFIGS.EMAIL_WELCOME_PASS,
       subject: title,
       html: `
       <!DOCTYPE html>
