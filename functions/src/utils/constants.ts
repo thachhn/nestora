@@ -56,9 +56,10 @@ const emailTemplate = (id: string) => `
       <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
         <p>Email của thầy cô đã được thêm vào hệ thống.</p>
 
-        <p>Thầy cô xem hướng dẫn tải file tại đây: <a href="https://nestora.edu.vn/support" style="color: #4CAF50;">https://nestora.edu.vn/support</a></p>
+        <p>Link tải sản phẩm: <a href="https://nestora.edu.vn/product/${id}" style="color: #4CAF50;">https://nestora.edu.vn/product/${id}</a></p>
 
-        <p>Link sản phẩm: <a href="https://nestora.edu.vn/product/${id}" style="color: #4CAF50;">https://nestora.edu.vn/product/${id}</a></p>
+        <p>Xem hướng dẫn tải file tại đây: <a href="https://nestora.edu.vn/support" style="color: #4CAF50;">https://nestora.edu.vn/support</a></p>
+
 
         <p><strong>Lưu ý:</strong></p>
         <ul style="line-height: 1.8;">
@@ -83,8 +84,8 @@ const textTemplate = (
   id: string
 ) => `Email của thầy cô đã được thêm vào hệ thống.
 
-Thầy cô xem hướng dẫn tải file tại đây: https://nestora.edu.vn/support
-Link sản phẩm: https://nestora.edu.vn/product/${id}
+Link tải sản phẩm: https://nestora.edu.vn/product/${id}
+Xem hướng dẫn tải file tại đây: https://nestora.edu.vn/support
 
 
 Lưu ý:
