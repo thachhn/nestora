@@ -1,0 +1,20 @@
+{
+  "title": "Mở bao lì xì may mắn",
+  "productId": "mo-bao-li-xi",
+  "keywords": [
+    "Mở bao lì xì may mắn",
+    "Mở bao lì xì online",
+    "Quay số may mắn",
+    "Quay quà ngẫu nhiên"
+  ],
+  "introFeatures": [
+    {
+      "text": "Nhập danh sách các bao lì xì và chiếu lên màn hình cho cả lớp cùng mở. Mỗi bao lì xì có thể chứa câu chúc hoặc số tiền khác nhau."
+    }
+  ],
+  "linkImage": "images/mo-bao-li-xi.gif",
+  "pagePath": "/external-apps?app-id=mo-bao-li-xi",
+  "isFree": true,
+  "isInternal": true,
+  "buildFile": "build.js"
+}
