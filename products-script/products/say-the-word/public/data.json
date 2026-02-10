@@ -1,0 +1,41 @@
+{
+  "title": "Say The Word",
+  "productId": "say-the-word",
+  "keywords": [
+    "Say The Word",
+    "Trò chơi đọc từ",
+    "Trò chơi đọc từ theo nhịp nhạc"
+  ],
+  "introFeatures": [
+    {
+      "text": "Ứng dụng tạo trò chơi đọc từ theo nhịp nhạc."
+    },
+    {
+      "text": "Thầy cô chiếu lên màn hình cho cả lớp cùng chơi."
+    },
+    {
+      "text": "Tải về sử dụng ngay không cần Internet, hỗ trợ cho cả Window / Macbook."
+    },
+    {
+      "text": "Chỉ một file html duy nhất, không cần cài đặt, không sợ virus, sử dụng vĩnh viễn."
+    }
+  ],
+  "features": [
+    {
+      "text": "Cho phép tạo bộ từ vựng theo ý bạn."
+    },
+    {
+      "text": "Cho phép up ảnh của mỗi từ."
+    },
+    {
+      "text": "Khi ứng dụng cập nhật chức năng mới, thầy cô được cập nhật miễn phí nhé."
+    }
+  ],
+  "linkDemo": "https://www.youtube.com/shorts/uBXsOawrdPo",
+  "linkImage": "images/say-the-word.jpg",
+  "price": 39000,
+  "oldPrice": 59000,
+  "isFree": false,
+  "isComingSoon": false,
+  "version": "1.0.1"
+}

@@ -22,6 +22,13 @@ export const PRODUCTS_CONFIG: ProductConfig[] = [
     file: "products/giai-ma-tranh/private/build.html",
   },
   {
+    id: "say-the-word",
+    name: "Say The Word",
+    buildDir: "../../mini/say-the-word",
+    price: 39000,
+    file: "products/say-the-word/private/build.html",
+  },
+  {
     id: "virtual-gallery",
     name: "Phòng trưng bày ảnh",
     buildDir: "../../mini/virtual-gallery",
