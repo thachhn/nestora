@@ -50,10 +50,10 @@
     }
   ],
   "linkDemo": "https://youtu.be/2nbLfC75k-Y",
-  "linkImage": "images/memomi.gif",
+  "linkImage": "images/memomi.jpg",
   "price": 49000,
   "oldPrice": 69000,
   "isFree": false,
   "isComingSoon": false,
-  "version": "1.0.12"
+  "version": "1.0.13"
 }
